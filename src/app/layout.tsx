@@ -2,6 +2,10 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
+ChartJS.register(CategoryScale)
+
+import { CategoryScale, Chart as ChartJS } from "chart.js/auto";
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {

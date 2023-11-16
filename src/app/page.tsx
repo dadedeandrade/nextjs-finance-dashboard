@@ -5,6 +5,17 @@ import styled from "styled-components";
 import BarChart from "./components/BarChart";
 import PieChart from "./components/PieChart";
 
+
+import {
+  CategoryScale,
+  LinearScale,
+  Chart as ChartJS,
+  BarElement,
+} from "chart.js/auto";
+
+ChartJS.register(CategoryScale, LinearScale);
+
+
 const Title = styled.h1`
   font-size: 1.5em;
   text-align: center;

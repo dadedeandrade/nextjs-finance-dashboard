@@ -32,7 +32,7 @@ export const OverviewBalance = (props: any) => {
           </Stack>
           <Avatar
             sx={{
-              backgroundColor: "primary.main",
+              backgroundColor: "#F79009",
               height: 56,
               width: 56,
             }}

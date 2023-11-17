@@ -14,8 +14,6 @@ import PendingActionsIcon from "@mui/icons-material/PendingActions";
 export const OverviewPendingTransactions = ({ sx }: any) => {
   const { futureTransactions } = useTransactions();
 
-  console.log(futureTransactions);
-
   return (
     <Card sx={sx}>
       <CardContent>

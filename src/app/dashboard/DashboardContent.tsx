@@ -6,6 +6,7 @@ import PieChart from "../components/charts/PieChart";
 import BarChart from "../components/charts/BarChart";
 import { useState } from "react";
 import { OverviewBalance } from "../components/cards/OverviewBalance";
+import { OverviewPendingTransactions } from "../components/cards/OverviewPendingTransactions";
 
 function DashboardContent(props: any) {
   const testData = [
@@ -64,11 +65,7 @@ function DashboardContent(props: any) {
               <OverviewBalance />
             </Mui.Grid>
             <Mui.Grid xs={12} sm={6} lg={3}>
-              <OverviewRevenue
-                difference={12}
-                positive
-                sx={{ height: "100%" }}
-              />
+              <OverviewPendingTransactions sx={{ height: "100%" }} />
             </Mui.Grid>
 
             <Mui.Grid xs={12} lg={8} sx={{ width: 700 }}>

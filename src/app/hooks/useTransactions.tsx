@@ -69,7 +69,16 @@ const useTransactions = () => {
       0
     ) || 0;
 
-  return { sumAllWithdrawals, sumAllDeposits };
+  const futureTransactions =
+    data?.transactions.filter((transaction) => transaction.date > Date.now()) ||
+    [];
+
+  return {
+    transactions: data?.transactions,
+    sumAllWithdrawals,
+    sumAllDeposits,
+    futureTransactions,
+  };
 };
 
 export default useTransactions;

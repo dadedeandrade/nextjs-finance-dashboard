@@ -13,6 +13,9 @@ type Props = {
 function OverviewExpenses({ difference, positive, value, sx }: Props) {
   const { withdrawalTransactions } = useTransactions();
 
+  if (!withdrawalTransactions) {
+    return <>Loading</>;
+  }
   const sum = withdrawalTransactions!.reduce(
     (partialSum, a) => partialSum + parseFloat(a.amount) / 100,
     0
@@ -31,7 +34,7 @@ function OverviewExpenses({ difference, positive, value, sx }: Props) {
             <Mui.Typography color="text.secondary" variant="overline">
               Expenses
             </Mui.Typography>
-            <Mui.Typography variant="h4">
+            <Mui.Typography variant="body1">
               {sum.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,

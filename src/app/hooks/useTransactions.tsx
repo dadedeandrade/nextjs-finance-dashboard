@@ -14,6 +14,8 @@ function useTransactions() {
   const [transactions, setTransactions] = useState<Transaction[]>();
   const [withdrawalTransactions, setWithdrawalTransactions] =
     useState<Transaction[]>();
+  const [depositTransactions, setDepositTransactions] =
+    useState<Transaction[]>();
 
   const getData = () => {
     fetch("transactions.json", {
@@ -28,11 +30,14 @@ function useTransactions() {
       .then(function (myJson) {
         setTransactions(myJson);
 
-        // Filter withdrawal transactions
         const withdrawals = myJson.filter(
           (el: any) => el.transaction_type === "withdraw"
         );
+        const deposits = myJson.filter(
+          (el: any) => el.transaction_type === "deposit"
+        );
         setWithdrawalTransactions(withdrawals);
+        setDepositTransactions(deposits);
       });
   };
 
@@ -40,7 +45,7 @@ function useTransactions() {
     getData();
   }, []);
 
-  return { transactions, withdrawalTransactions };
+  return { transactions, withdrawalTransactions, depositTransactions };
 }
 
 export default useTransactions;

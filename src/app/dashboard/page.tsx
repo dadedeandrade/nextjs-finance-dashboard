@@ -25,17 +25,17 @@ import HomeIcon from "@mui/icons-material/Home";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardContent from "./DashboardContent";
+import {
+  CategoryScale,
+  LinearScale,
+  Chart as ChartJS,
+  BarElement,
+} from "chart.js/auto";
+
+ChartJS.register(CategoryScale, LinearScale);
+
 
 function Dashboard() {
-  /*
-"date": Data da transação no formato EPOCH em milissegundos;
-"amount": Valor da transação em string, sem separador de decimais: A string "5565" representa uma transação de 55,65;
-"transaction_type": Representa se a transação foi uma receita (deposit) ou despesa (withdraw);
-"currency": Moeda da transação;
-"account": Empresa de origem ou destino da transação;
-"industry": Categoria de Indústria à qual a Empresa da transação pertence;
-"state": Estado onde a Empresa da transação está incorporada.
-*/
   const session = useSession();
 
   if (session.status == "unauthenticated") {

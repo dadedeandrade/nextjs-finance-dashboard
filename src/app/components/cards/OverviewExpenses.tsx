@@ -6,21 +6,15 @@ import useTransactions from "@/app/hooks/useTransactions";
 type Props = {
   difference: number;
   positive: boolean;
-  value: string;
   sx: any;
 };
 
-function OverviewExpenses({ difference, positive, value, sx }: Props) {
-  const { withdrawalTransactions } = useTransactions();
+function OverviewExpenses({ difference, positive, sx }: Props) {
+  const { sumAllWithdrawals } = useTransactions();
 
-  if (!withdrawalTransactions) {
+  if (!sumAllWithdrawals) {
     return <>Loading</>;
   }
-  const sum = withdrawalTransactions!.reduce(
-    (partialSum, a) => partialSum + parseFloat(a.amount) / 100,
-    0
-  );
-  
   return (
     <Mui.Card sx={sx}>
       <Mui.CardContent>
@@ -35,10 +29,11 @@ function OverviewExpenses({ difference, positive, value, sx }: Props) {
               Expenses
             </Mui.Typography>
             <Mui.Typography variant="body1">
-              {sum.toLocaleString("en-US", {
+              {sumAllWithdrawals.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
-              })}$
+              })}
+              $
             </Mui.Typography>
           </Mui.Stack>
           <Mui.Avatar

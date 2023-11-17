@@ -1,51 +1,75 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-function useTransactions() {
-  type Transaction = {
-    date: number;
-    amount: string;
-    transaction_type: "deposit" | "withdraw";
-    currency: string;
-    account: string;
-    industry: string;
-    state: string;
-  };
+type Transaction = {
+  date: number;
+  amount: string;
+  transaction_type: "deposit" | "withdraw";
+  currency: string;
+  account: string;
+  industry: string;
+  state: string;
+};
 
-  const [transactions, setTransactions] = useState<Transaction[]>();
-  const [withdrawalTransactions, setWithdrawalTransactions] =
-    useState<Transaction[]>();
-  const [depositTransactions, setDepositTransactions] =
-    useState<Transaction[]>();
+type TransactionsData = {
+  transactions: Transaction[];
+  withdrawalTransactions: Transaction[];
+  depositTransactions: Transaction[];
+};
+const useTransactions = () => {
+  const [data, setData] = useState<TransactionsData | null>(null);
 
-  const getData = () => {
-    fetch("transactions.json", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (myJson) {
-        setTransactions(myJson);
-
-        const withdrawals = myJson.filter(
-          (el: any) => el.transaction_type === "withdraw"
-        );
-        const deposits = myJson.filter(
-          (el: any) => el.transaction_type === "deposit"
-        );
-        setWithdrawalTransactions(withdrawals);
-        setDepositTransactions(deposits);
+  const fetchData = async () => {
+    try {
+      const response = await fetch("transactions.json", {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const jsonData = await response.json();
+
+      const withdrawals = jsonData.filter(
+        (el: Transaction) => el.transaction_type === "withdraw"
+      );
+
+      const deposits = jsonData.filter(
+        (el: Transaction) => el.transaction_type === "deposit"
+      );
+
+      setData({
+        transactions: jsonData,
+        withdrawalTransactions: withdrawals,
+        depositTransactions: deposits,
+      });
+    } catch (error: any) {
+      console.error("Error fetching data:", error.message);
+    }
   };
 
   useEffect(() => {
-    getData();
+    fetchData();
   }, []);
 
-  return { transactions, withdrawalTransactions, depositTransactions };
-}
+  const sumAllDeposits =
+    data?.depositTransactions.reduce(
+      (partialSum, transaction) =>
+        partialSum + parseFloat(transaction.amount) / 100,
+      0
+    ) || 0;
+
+  const sumAllWithdrawals =
+    data?.withdrawalTransactions.reduce(
+      (partialSum, transaction) =>
+        partialSum + parseFloat(transaction.amount) / 100,
+      0
+    ) || 0;
+
+  return { sumAllWithdrawals, sumAllDeposits };
+};
 
 export default useTransactions;

@@ -6,19 +6,15 @@ import useTransactions from "@/app/hooks/useTransactions";
 type Props = {
   difference: number;
   positive: boolean;
-  value: string;
   sx: any;
 };
 
-function OverviewRevenue({ difference, positive, value, sx }: Props) {
-  const { depositTransactions } = useTransactions();
-  if (!depositTransactions) {
+function OverviewRevenue({ difference, positive, sx }: Props) {
+  const { sumAllDeposits } = useTransactions();
+  if (!sumAllDeposits) {
     return <>Loading</>;
   }
-  const sum = depositTransactions!.reduce(
-    (partialSum, a) => partialSum + parseFloat(a.amount) / 100,
-    0
-  );
+  
 
   return (
     <Mui.Card sx={sx}>
@@ -34,7 +30,7 @@ function OverviewRevenue({ difference, positive, value, sx }: Props) {
               Revenue
             </Mui.Typography>
             <Mui.Typography variant="body1" >
-              {sum.toLocaleString("en-US", {
+              {sumAllDeposits.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}

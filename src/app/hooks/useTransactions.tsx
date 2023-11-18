@@ -20,7 +20,7 @@ const useTransactions = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("transactions.json", {
+      const response = await fetch("/transactions.json", {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",

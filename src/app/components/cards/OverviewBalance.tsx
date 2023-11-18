@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {
   Avatar,
   Card,
@@ -45,9 +44,4 @@ export const OverviewBalance = (props: any) => {
       </CardContent>
     </Card>
   );
-};
-
-OverviewBalance.propTypes = {
-  value: PropTypes.string,
-  sx: PropTypes.object,
 };

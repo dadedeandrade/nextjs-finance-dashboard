@@ -34,9 +34,6 @@ function DashboardContent(props: any) {
 
   return (
     <>
-      <Head>
-        <title>Overview | Devias Kit</title>
-      </Head>
 
       <Mui.Box
         component="main"
@@ -62,7 +59,7 @@ function DashboardContent(props: any) {
               />
             </Mui.Grid>
             <Mui.Grid xs={12} sm={6} lg={3}>
-              <OverviewBalance />
+              <OverviewBalance sx={{ height: "100%" }} />
             </Mui.Grid>
             <Mui.Grid xs={12} sm={6} lg={3}>
               <OverviewPendingTransactions sx={{ height: "100%" }} />

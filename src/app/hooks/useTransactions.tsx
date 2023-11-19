@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-type Transaction = {
+export type Transaction = {
   date: number;
   amount: string;
   transaction_type: "deposit" | "withdraw";

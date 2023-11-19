@@ -31,7 +31,7 @@ export const ThemeProviderMUI = ({ children }: Props) => {
     components: {
       MuiIconButton: {
         styleOverrides: {
-          root: {
+          colorPrimary: {
             color: "#F8FAF7",
           },
         },

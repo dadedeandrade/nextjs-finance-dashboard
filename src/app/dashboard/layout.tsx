@@ -3,26 +3,40 @@ import {
   AppBar,
   Avatar,
   Box,
+  Button,
   Divider,
   Drawer,
+  FormControl,
   IconButton,
+  InputLabel,
   List,
   ListItem,
   ListItemAvatar,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  MenuItem,
+  Modal,
+  Select,
+  SelectChangeEvent,
   Stack,
+  TextField,
   Toolbar,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signOut, useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import DatePick from "../components/modalForm/DatePick";
+import ModalSelect from "../components/modalForm/ModalSelect";
+
 export default function DashboardLayout({
   children,
 }: {
@@ -49,7 +63,90 @@ export default function DashboardLayout({
     };
 
   const router = useRouter();
+  const pathName = usePathname();
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [state, setState] = useState("");
+  const [industry, setIndustries] = useState("");
+
+  const handleChangeIndustries = (event: SelectChangeEvent) => {
+    setIndustries(event.target.value as string);
+  };
+  const handleChangeState = (event: SelectChangeEvent) => {
+    setState(event.target.value as string);
+  };
+
+  const stateList = [
+    "AL",
+    "AK",
+    "AZ",
+    "AR",
+    "CA",
+    "CO",
+    "CT",
+    "DE",
+    "FL",
+    "GA",
+    "HI",
+    "ID",
+    "IL",
+    "IN",
+    "IA",
+    "KS",
+    "KY",
+    "LA",
+    "ME",
+    "MD",
+    "MA",
+    "MI",
+    "MN",
+    "MS",
+    "MO",
+    "MT",
+    "NE",
+    "NV",
+    "NH",
+    "NJ",
+    "NM",
+    "NY",
+    "NC",
+    "ND",
+    "OH",
+    "OK",
+    "OR",
+    "PA",
+    "RI",
+    "SC",
+    "SD",
+    "TN",
+    "TX",
+    "UT",
+    "VT",
+    "VA",
+    "WA",
+    "WV",
+    "WI",
+    "WY",
+  ];
+
+  const availableIndustries = [
+    "Oil and Gas Equipment",
+    "Food Consumer Products",
+    "Hotels",
+    "Apparel",
+    "Education",
+    "Airlines",
+    "Automotive Retailing",
+    "Advertising",
+    "Computer Software",
+    "Mail",
+  ];
+  const theme = useTheme(); 
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md')); 
+ 
   return (
     <section>
       <Box sx={{ flexGrow: 1 }}>
@@ -69,16 +166,77 @@ export default function DashboardLayout({
               Finances
             </Typography>
 
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={() => signOut({ callbackUrl: "/" })}
+            {pathName === "/dashboard" && (
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+                onClick={handleOpen}
+              >
+                <FilterListIcon />
+              </IconButton>
+            )}
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+              keepMounted
+              sx={{}}
             >
-              <LogoutIcon />
-            </IconButton>
+              <Stack
+                sx={{
+                  width: isSmallScreen ? "90%" : "50%",
+                  height: isSmallScreen ? "80%" : "auto",
+                  padding: isSmallScreen ? "20px" : "50px",
+                  margin: isSmallScreen ? "10px" : "50px",
+                  backgroundColor: "white",
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  bgcolor: "background.paper",
+                  border: "2px solid #000",
+                  boxShadow: 24,
+                  overflow: "scroll",
+                }}
+                gap={3}
+              >
+                <Typography variant="h4">Filter by</Typography>
+
+                <DatePick />
+
+                <TextField
+                  id="outlined-basic"
+                  label="Account"
+                  variant="outlined"
+                />
+                <ModalSelect
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={industry}
+                  label="Industry"
+                  onChangeFn={handleChangeIndustries}
+                  availableOptions={availableIndustries}
+                  inputLabel="Industry"
+                />
+                <ModalSelect
+                  inputLabel="State"
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={state}
+                  label="Age"
+                  onChangeFn={handleChangeState}
+                  availableOptions={stateList}
+                />
+
+                <Stack>
+                  <Button size="small">Apply Filters</Button>
+                </Stack>
+              </Stack>
+            </Modal>
           </Toolbar>
         </AppBar>
       </Box>
@@ -100,7 +258,9 @@ export default function DashboardLayout({
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItemButton>
-            <ListItemButton onClick={() => router.push("/dashboard/pendingTransactions")}>
+            <ListItemButton
+              onClick={() => router.push("/dashboard/pendingTransactions")}
+            >
               <ListItemIcon>
                 <SpaceDashboardIcon />
               </ListItemIcon>
@@ -108,7 +268,15 @@ export default function DashboardLayout({
             </ListItemButton>
           </List>
           <List>
+            <ListItemButton onClick={() => signOut({ callbackUrl: "/" })}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Sign Out" />
+            </ListItemButton>
+
             <Divider></Divider>
+
             <ListItem>
               <ListItemAvatar>
                 <Avatar

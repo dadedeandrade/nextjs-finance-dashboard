@@ -33,7 +33,6 @@ function DashboardContent(props: any) {
   });
 
   return (
-    <>
 
       <Mui.Box
         component="main"
@@ -44,37 +43,36 @@ function DashboardContent(props: any) {
       >
         <Mui.Container maxWidth="xl">
           <Mui.Grid container spacing={3}>
-            <Mui.Grid xs={12} sm={6} lg={3}>
+            <Mui.Grid item xs={12} sm={6} lg={3}>
               <OverviewExpenses
                 difference={12}
                 positive
                 sx={{ height: "100%" }}
               />
             </Mui.Grid>
-            <Mui.Grid xs={12} sm={6} lg={3}>
+            <Mui.Grid item xs={12} sm={6} lg={3}>
               <OverviewRevenue
                 difference={12}
                 positive
                 sx={{ height: "100%" }}
               />
             </Mui.Grid>
-            <Mui.Grid xs={12} sm={6} lg={3}>
+            <Mui.Grid item xs={12} sm={6} lg={3}>
               <OverviewBalance sx={{ height: "100%" }} />
             </Mui.Grid>
-            <Mui.Grid xs={12} sm={6} lg={3}>
+            <Mui.Grid item xs={12} sm={6} lg={3}>
               <OverviewPendingTransactions sx={{ height: "100%" }} />
             </Mui.Grid>
 
-            <Mui.Grid xs={12} lg={8} sx={{ width: 700 }}>
+            <Mui.Grid item xs={12} lg={8} sx={{ width: 700 }}>
               <BarChart chartData={userData}></BarChart>
             </Mui.Grid>
-            <Mui.Grid xs={12} md={6} lg={4} sx={{ width: 700 }}>
+            <Mui.Grid item xs={12} md={6} lg={4} sx={{ width: 700 }}>
               <PieChart chartData={userData} />
             </Mui.Grid>
           </Mui.Grid>
         </Mui.Container>
       </Mui.Box>
-    </>
   );
 }
 

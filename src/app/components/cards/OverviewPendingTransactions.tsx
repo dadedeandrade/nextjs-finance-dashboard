@@ -24,7 +24,6 @@ export const OverviewPendingTransactions = ({ sx }: any) => {
           alignItems="flex-start"
           direction="column"
           justifyContent="space-between"
-          spacing={3}
         >
           <Stack
             spacing={1}
@@ -33,7 +32,7 @@ export const OverviewPendingTransactions = ({ sx }: any) => {
             alignItems={"center"}
             width={"100%"}
           >
-            <Typography color="text.secondary" variant="overline">
+            <Typography width={122} color="text.secondary" variant="overline">
               Pending Transactions
             </Typography>
             <Avatar

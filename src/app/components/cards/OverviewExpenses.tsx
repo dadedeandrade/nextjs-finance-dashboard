@@ -32,8 +32,7 @@ function OverviewExpenses({ difference, positive, sx }: Props) {
               {sumAllWithdrawals.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
-              })}
-              $
+              })} $
             </Mui.Typography>
           </Mui.Stack>
           <Mui.Avatar

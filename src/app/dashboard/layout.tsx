@@ -184,14 +184,12 @@ export default function DashboardLayout({
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
               keepMounted
-              sx={{}}
             >
               <Stack
                 sx={{
                   width: isSmallScreen ? "90%" : "50%",
                   height: isSmallScreen ? "80%" : "auto",
                   padding: isSmallScreen ? "20px" : "50px",
-                  margin: isSmallScreen ? "10px" : "50px",
                   backgroundColor: "white",
                   position: "absolute",
                   top: "50%",

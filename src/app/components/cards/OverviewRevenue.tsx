@@ -33,8 +33,7 @@ function OverviewRevenue({ difference, positive, sx }: Props) {
               {sumAllDeposits.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
-              })}
-              $
+              })} $
             </Mui.Typography>
           </Mui.Stack>
           <Mui.Avatar

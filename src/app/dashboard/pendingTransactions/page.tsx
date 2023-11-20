@@ -9,7 +9,7 @@ function Page() {
   const transactionsToTows: Data[] = futureTransactions.map((el, i) => {
     const formattedDate = Utils.formatEPOCHtoDate(el.date);
 
-    return { ...el, id: i, date: formattedDate };
+    return { ...el, id: i, date: formattedDate, amount: parseInt(el.amount) };
   });
 
   return <EnhancedTable rows={transactionsToTows}></EnhancedTable>;

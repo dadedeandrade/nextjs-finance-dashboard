@@ -10,4 +10,15 @@ export default class Utils {
       dateObj.getUTCFullYear()
     );
   }
+
+  static formatNumber = (input: string) => {
+    if (typeof input === 'string') {
+      const [parteInteira, parteDecimal] = input.split('');
+      const resultado = parteDecimal ? `${parteInteira},${parteDecimal}` : parteInteira;
+
+      return resultado;
+    }
+
+    return input;
+  };
 }

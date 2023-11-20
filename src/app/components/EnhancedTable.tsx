@@ -13,19 +13,14 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 
 export interface Data {
   id: number;
   date: string;
-  amount: string;
+  amount: number;
   transaction_type: "deposit" | "withdraw";
   currency: string;
   account: string;
@@ -40,7 +35,7 @@ function createData(
   currency: string,
   transaction_type: "deposit" | "withdraw",
   industry: string,
-  amount: string,
+  amount: number,
   state: string
 ): Data {
   return {
@@ -121,6 +116,12 @@ const headCells: readonly HeadCell[] = [
     label: "Date",
   },
   {
+    id: "amount",
+    numeric: true,
+    disablePadding: false,
+    label: "Amount",
+  },
+  {
     id: "currency",
     numeric: false,
     disablePadding: false,
@@ -133,12 +134,6 @@ const headCells: readonly HeadCell[] = [
     label: "Transaction Type",
   },
 
-  {
-    id: "amount",
-    numeric: false,
-    disablePadding: false,
-    label: "Amount",
-  },
   {
     id: "state",
     numeric: false,
@@ -267,6 +262,7 @@ export default function EnhancedTable({ rows }: EnhancedTableProps) {
   return (
     <Box sx={{ width: "100%", padding: 3 }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
+        <EnhancedTableToolbar />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -294,9 +290,11 @@ export default function EnhancedTable({ rows }: EnhancedTableProps) {
                     </TableCell>
                     <TableCell align="left">{row.industry}</TableCell>
                     <TableCell align="left">{row.date}</TableCell>
-                    <TableCell align="left">{row.currency}</TableCell>
+                    <TableCell align="left">
+                      {(row.amount / 100).toFixed(2)} $ <br />
+                    </TableCell>
+                    <TableCell align="left">{row.currency.toUpperCase()}</TableCell>
                     <TableCell align="left">{row.transaction_type}</TableCell>
-                    <TableCell align="left">{row.amount}</TableCell>
                     <TableCell align="left">{row.state}</TableCell>
                   </TableRow>
                 );

@@ -27,7 +27,7 @@ export const OverviewBalance = (props: any) => {
             <Typography color="text.secondary" variant="overline">
               Balance
             </Typography>
-            <Typography variant="body1">{(sumAllDeposits - sumAllWithdrawals).toFixed(2)}$</Typography>
+            <Typography variant="body1">{(sumAllDeposits - sumAllWithdrawals).toFixed(2)} $</Typography>
           </Stack>
           <Avatar
             sx={{

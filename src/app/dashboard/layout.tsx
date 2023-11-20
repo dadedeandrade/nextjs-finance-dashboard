@@ -184,7 +184,6 @@ export default function DashboardLayout({
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
               keepMounted
-              sx={{}}
             >
               <Stack
                 sx={{

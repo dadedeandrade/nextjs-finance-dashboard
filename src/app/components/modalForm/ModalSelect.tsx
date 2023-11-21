@@ -35,7 +35,7 @@ const ModalSelect = ({
         onChange={onChangeFn}
       >
         {availableOptions.map((el) => {
-          return <MenuItem value={el}>{el}</MenuItem>;
+          return <MenuItem key={el} value={el}>{el}</MenuItem>;
         })}
       </Select>
     </FormControl>

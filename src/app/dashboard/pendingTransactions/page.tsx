@@ -5,7 +5,10 @@ import Utils from "@/app/utils";
 import React from "react";
 
 function Page() {
-  const { futureTransactions } = useTransactions();
+  const { transactions } = useTransactions();
+  const futureTransactions = transactions
+    ? transactions.filter((transaction) => transaction.date > Date.now())
+    : [];
   const transactionsToTows: Data[] = futureTransactions.map((el, i) => {
     const formattedDate = Utils.formatEPOCHtoDate(el.date);
 

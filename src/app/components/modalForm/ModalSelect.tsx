@@ -1,3 +1,4 @@
+import { FormValues } from "@/app/dashboard/layout";
 import {
   FormControl,
   InputLabel,
@@ -5,37 +6,43 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
+import { UseFormRegister } from "react-hook-form";
 
 type Props = {
   labelId: string;
-  id: string;
-  value: string;
+  id:
+    | "startDate"
+    | "endDate"
+    | "account"
+    | "industry"
+    | "state"
+    | "startDate.value"
+    | "startDate.name"
+    | "endDate.value"
+    | "endDate.name";
   label: string;
-  onChangeFn: (event: SelectChangeEvent) => void;
   inputLabel: string;
   availableOptions: string[];
+  register: UseFormRegister<FormValues>;
 };
 const ModalSelect = ({
   labelId,
   id,
   label,
-  onChangeFn,
   inputLabel,
-  value,
   availableOptions,
+  register,
 }: Props) => {
   return (
     <FormControl fullWidth>
       <InputLabel id={id}>{inputLabel}</InputLabel>
-      <Select
-        labelId={labelId}
-        id={id}
-        value={value}
-        label={label}
-        onChange={onChangeFn}
-      >
+      <Select labelId={labelId} id={id} label={label} {...register(id)}>
         {availableOptions.map((el) => {
-          return <MenuItem key={el} value={el}>{el}</MenuItem>;
+          return (
+            <MenuItem key={el} value={el}>
+              {el}
+            </MenuItem>
+          );
         })}
       </Select>
     </FormControl>

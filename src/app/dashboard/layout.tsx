@@ -36,6 +36,15 @@ import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import DatePick from "../components/modalForm/DatePick";
 import ModalSelect from "../components/modalForm/ModalSelect";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+export type FormValues = {
+  startDate: { name: string; value: string };
+  endDate: { name: string; value: string };
+  account: string;
+  industry: string;
+  state: string;
+};
 
 export default function DashboardLayout({
   children,
@@ -68,16 +77,6 @@ export default function DashboardLayout({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const [state, setState] = useState("");
-  const [industry, setIndustries] = useState("");
-
-  const handleChangeIndustries = (event: SelectChangeEvent) => {
-    setIndustries(event.target.value as string);
-  };
-  const handleChangeState = (event: SelectChangeEvent) => {
-    setState(event.target.value as string);
-  };
 
   const stateList = [
     "AL",
@@ -144,9 +143,20 @@ export default function DashboardLayout({
     "Computer Software",
     "Mail",
   ];
-  const theme = useTheme(); 
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md')); 
- 
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm<FormValues>();
+  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) =>
+    console.log(data);
+
   return (
     <section>
       <Box sx={{ flexGrow: 1 }}>
@@ -185,55 +195,64 @@ export default function DashboardLayout({
               aria-describedby="modal-modal-description"
               keepMounted
             >
-              <Stack
-                sx={{
-                  width: isSmallScreen ? "90%" : "50%",
-                  height: isSmallScreen ? "80%" : "auto",
-                  padding: isSmallScreen ? "20px" : "50px",
-                  backgroundColor: "white",
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  bgcolor: "background.paper",
-                  border: "2px solid #000",
-                  boxShadow: 24,
-                  overflow: "scroll",
-                }}
-                gap={3}
-              >
-                <Typography variant="h4">Filter by</Typography>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Stack
+                  sx={{
+                    width: isSmallScreen ? "90%" : "50%",
+                    height: isSmallScreen ? "80%" : "auto",
+                    padding: isSmallScreen ? "20px" : "50px",
+                    backgroundColor: "white",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    bgcolor: "background.paper",
+                    border: "2px solid #000",
+                    boxShadow: 24,
+                    overflow: "scroll",
+                  }}
+                  gap={3}
+                >
+                  <Typography variant="h4">Filter by</Typography>
 
-                <DatePick />
+                  <DatePick
+                    control={control}
+                    labelFirst={"Start date"}
+                    labelSecond={"End Date"}
+                    nameFirst={"startDate"}
+                    nameSecond={"endDate"}
+                  />
 
-                <TextField
-                  id="outlined-basic"
-                  label="Account"
-                  variant="outlined"
-                />
-                <ModalSelect
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={industry}
-                  label="Industry"
-                  onChangeFn={handleChangeIndustries}
-                  availableOptions={availableIndustries}
-                  inputLabel="Industry"
-                />
-                <ModalSelect
-                  inputLabel="State"
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={state}
-                  label="Age"
-                  onChangeFn={handleChangeState}
-                  availableOptions={stateList}
-                />
+                  <TextField
+                    id="outlined-basic"
+                    label="Account"
+                    variant="outlined"
+                    {...register("account")}
+                  />
+                  <ModalSelect
+                    labelId="industry"
+                    id="industry"
+                    label="Industry"
+                    availableOptions={availableIndustries}
+                    inputLabel="Industry"
+                    register={register}
+                  />
+                  <ModalSelect
+                    inputLabel="State"
+                    labelId="state"
+                    id="state"
+                    label="State"
+                    availableOptions={stateList}
+                    register={register}
+                  />
 
-                <Stack>
-                  <Button size="small">Apply Filters</Button>
+                  <Stack>
+                    <Button type="submit" size="small">
+                      Apply Filters
+                    </Button>
+                  </Stack>
                 </Stack>
-              </Stack>
+              </form>
             </Modal>
           </Toolbar>
         </AppBar>

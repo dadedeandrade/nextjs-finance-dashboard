@@ -1,8 +1,23 @@
 import { Stack } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { Controller } from "react-hook-form";
 
-const DatePick = () => {
+type Props = {
+  control: any;
+  labelFirst: any;
+  labelSecond: any;
+  nameFirst: any;
+  nameSecond: any;
+};
+
+const DatePick = ({
+  control,
+  nameFirst,
+  labelFirst,
+  labelSecond,
+  nameSecond,
+}: Props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Stack
@@ -14,9 +29,31 @@ const DatePick = () => {
         }}
         width={"100%"}
       >
-        <DatePicker sx={{ width: "100%" }} label={"Start date"} />
+        <Controller
+          name={nameFirst}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <DatePicker
+              sx={{ width: "100%" }}
+              label={labelFirst}
+              value={value}
+              onChange={onChange}
+            />
+          )}
+        />
         To
-        <DatePicker sx={{ width: "100%" }} label={"End date"} />
+        <Controller
+          name={nameSecond}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <DatePicker
+              sx={{ width: "100%" }}
+              label={labelSecond}
+              value={value}
+              onChange={onChange}
+            />
+          )}
+        />
       </Stack>
     </LocalizationProvider>
   );

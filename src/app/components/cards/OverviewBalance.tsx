@@ -40,9 +40,14 @@ export const OverviewBalance = ({ sx }: Props) => {
 
   const filteredTransactions = transactions.filter(
     (transaction: Transaction) => {
-      return transaction.account
-        .toLowerCase()
-        .includes(filterState.account.toLowerCase());
+      return (
+        transaction.account
+          .toLowerCase()
+          .includes(filterState.account.toLowerCase()) &&
+        transaction.industry
+          .toLowerCase()
+          .includes(filterState.industry.toLowerCase())
+      );
     }
   );
 

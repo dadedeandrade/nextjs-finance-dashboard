@@ -46,10 +46,12 @@ export const OverviewPendingTransactions = ({ sx }: Props) => {
   const filteredTransactions = transactions.filter(
     (transaction: Transaction) => {
       return (
-        transaction.transaction_type == "withdraw" &&
         transaction.account
           .toLowerCase()
-          .includes(filterState.account.toLowerCase())
+          .includes(filterState.account.toLowerCase()) &&
+        transaction.industry
+          .toLowerCase()
+          .includes(filterState.industry.toLowerCase())
       );
     }
   );

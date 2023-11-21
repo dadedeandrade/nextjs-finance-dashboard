@@ -5,14 +5,19 @@ import {
   CircularProgress,
   Stack,
   SvgIcon,
+  SxProps,
+  Theme,
   Typography,
 } from "@mui/material";
 import useTransactions, { Transaction } from "@/app/hooks/useTransactions";
 import BalanceIcon from "@mui/icons-material/Balance";
 import { useAppSelector } from "@/app/store/store";
-export const OverviewBalance = (props: any) => {
-  const { value, sx } = props;
 
+type Props = {
+  sx: SxProps<Theme> | undefined;
+};
+
+export const OverviewBalance = ({ sx }: Props) => {
   const { transactions } = useTransactions();
   const filterState = useAppSelector((state) => state.filters);
 

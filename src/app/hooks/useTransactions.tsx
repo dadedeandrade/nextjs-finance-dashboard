@@ -12,8 +12,6 @@ export type Transaction = {
 
 type TransactionsData = {
   transactions: Transaction[];
-  withdrawalTransactions: Transaction[];
-  depositTransactions: Transaction[];
 };
 const useTransactions = () => {
   const [data, setData] = useState<TransactionsData | null>(null);
@@ -33,18 +31,8 @@ const useTransactions = () => {
 
       const jsonData = await response.json();
 
-      const withdrawals = jsonData.filter(
-        (el: Transaction) => el.transaction_type === "withdraw"
-      );
-
-      const deposits = jsonData.filter(
-        (el: Transaction) => el.transaction_type === "deposit"
-      );
-
       setData({
         transactions: jsonData,
-        withdrawalTransactions: withdrawals,
-        depositTransactions: deposits,
       });
     } catch (error: any) {
       console.error("Error fetching data:", error.message);
@@ -55,28 +43,38 @@ const useTransactions = () => {
     fetchData();
   }, []);
 
-  const sumAllDeposits =
-    data?.depositTransactions.reduce(
-      (partialSum, transaction) =>
-        partialSum + parseFloat(transaction.amount) / 100,
-      0
-    ) || 0;
+  const revenue =
+    data?.transactions
+      .filter((el: Transaction) => el.transaction_type === "deposit")
+      .reduce(
+        (partialSum, transaction) =>
+          partialSum + parseFloat(transaction.amount) / 100,
+        0
+      ) || 0;
 
-  const sumAllWithdrawals =
-    data?.withdrawalTransactions.reduce(
-      (partialSum, transaction) =>
-        partialSum + parseFloat(transaction.amount) / 100,
-      0
-    ) || 0;
+  const expenses =
+    data?.transactions
+      .filter((el: Transaction) => el.transaction_type === "withdraw")
+      .reduce(
+        (partialSum, transaction) =>
+          partialSum + parseFloat(transaction.amount) / 100,
+        0
+      ) || 0;
 
   const futureTransactions =
     data?.transactions.filter((transaction) => transaction.date > Date.now()) ||
     [];
 
+  const getTransactionsPerMonth = () => {
+    return [
+      { transactionMonth: "Jan", amount: 123, transaction_type: "deposit" },
+    ];
+  };
+
   return {
     transactions: data?.transactions,
-    sumAllWithdrawals,
-    sumAllDeposits,
+    expenses,
+    revenue,
     futureTransactions,
   };
 };

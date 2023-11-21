@@ -10,8 +10,8 @@ type Props = {
 };
 
 function OverviewRevenue({ difference, positive, sx }: Props) {
-  const { sumAllDeposits } = useTransactions();
-  if (!sumAllDeposits) {
+  const { revenue } = useTransactions();
+  if (!revenue) {
     return <>Loading</>;
   }
   
@@ -30,7 +30,7 @@ function OverviewRevenue({ difference, positive, sx }: Props) {
               Revenue
             </Mui.Typography>
             <Mui.Typography variant="body1" >
-              {sumAllDeposits.toLocaleString("en-US", {
+              {revenue.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })} $

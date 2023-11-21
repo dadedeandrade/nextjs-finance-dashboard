@@ -6,8 +6,12 @@ import BarChart from "../components/charts/BarChart";
 import { useState } from "react";
 import { OverviewBalance } from "../components/cards/OverviewBalance";
 import { OverviewPendingTransactions } from "../components/cards/OverviewPendingTransactions";
+import { selectedFilters } from "../store/filtersSlice";
+import { useSelector } from "react-redux";
 
 function DashboardContent(props: any) {
+  const filterState = useSelector(selectedFilters);
+
   const testData = [
     { month: "Jan", userGain: 80000, userLost: 823 },
     { month: "Fev", userGain: 180000, userLost: 8223 },

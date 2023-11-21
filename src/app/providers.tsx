@@ -2,6 +2,8 @@
 
 import { SessionProvider } from "next-auth/react";
 import { createTheme, colors, ThemeProvider } from "@mui/material";
+import { Provider } from "react-redux";
+import { store } from "@/app/store/store";
 
 type Props = {
   children?: React.ReactNode;
@@ -56,4 +58,8 @@ export const ThemeProviderMUI = ({ children }: Props) => {
     },
   });
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+};
+
+export const StoreProvider = ({ children }: Props) => {
+  return <Provider store={store}>{children}</Provider>;
 };

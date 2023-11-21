@@ -37,10 +37,12 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import DatePick from "../components/modalForm/DatePick";
 import ModalSelect from "../components/modalForm/ModalSelect";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { selectedFilters, setFilters } from "../store/filtersSlice";
 
 export type FormValues = {
-  startDate: { name: string; value: string };
-  endDate: { name: string; value: string };
+  startDate: Date | undefined;
+  endDate: Date | undefined;
   account: string;
   industry: string;
   state: string;
@@ -155,8 +157,20 @@ export default function DashboardLayout({
     formState: { errors },
   } = useForm<FormValues>();
 
+  const filterState = useSelector(selectedFilters);
+  const dispatch = useDispatch();
+
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    console.log(data);
+    dispatch(
+      setFilters({
+        account: data.account,
+        endDate: data.endDate,
+        industry: data.industry,
+        startDate: data.startDate,
+        state: data.state,
+      })
+    );
+    console.log(filterState);
     console.log("data");
   };
 

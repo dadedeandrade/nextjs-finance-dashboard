@@ -10,7 +10,9 @@ import { selectedFilters } from "../store/filtersSlice";
 import { useSelector } from "react-redux";
 
 function DashboardContent(props: any) {
-  const filterState = useSelector(selectedFilters);
+const filterState = useSelector(selectedFilters);
+  console.log(filterState);
+  
 
   const testData = [
     { month: "Jan", userGain: 80000, userLost: 823 },

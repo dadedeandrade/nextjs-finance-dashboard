@@ -1,10 +1,11 @@
 // filtersSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FilterState } from "./types";
+import { FormValues } from "../dashboard/layout";
 
-const initialState: FilterState = {
-  startDate: null,
-  endDate: null,
+const initialState: FormValues = {
+  startDate: undefined,
+  endDate: undefined,
   account: "",
   industry: "",
   state: "",
@@ -14,26 +15,19 @@ const filtersSlice = createSlice({
   name: "filters",
   initialState,
   reducers: {
-    setStartDate: (state, action: PayloadAction<string | null>) => {
-      state.startDate = action.payload;
-    },
-    setEndDate: (state, action: PayloadAction<string | null>) => {
-      state.endDate = action.payload;
-    },
-    setAccount: (state, action: PayloadAction<string>) => {
-      state.account = action.payload;
-    },
-    setIndustry: (state, action: PayloadAction<string>) => {
-      state.industry = action.payload;
-    },
-    setState: (state, action: PayloadAction<string>) => {
-      state.state = action.payload;
+    setFilters: (state, action: PayloadAction<FormValues>) => {
+      state.account = action.payload.account;
+      state.endDate = action.payload.endDate;
+      state.industry = action.payload.industry;
+      state.startDate = action.payload.startDate;
+      state.state = action.payload.state;
     },
   },
 });
 
-export const { setStartDate, setEndDate, setAccount, setIndustry, setState } =
-  filtersSlice.actions;
+export const {
+  setFilters,
+} = filtersSlice.actions;
 
 export const selectedFilters = (state: FilterState) => state;
 

@@ -154,8 +154,11 @@ export default function DashboardLayout({
     control,
     formState: { errors },
   } = useForm<FormValues>();
-  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) =>
+
+  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     console.log(data);
+    console.log("data");
+  };
 
   return (
     <section>
@@ -195,7 +198,13 @@ export default function DashboardLayout({
               aria-describedby="modal-modal-description"
               keepMounted
             >
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  await handleSubmit(onSubmit)();
+                  handleClose();
+                }}
+              >
                 <Stack
                   sx={{
                     width: isSmallScreen ? "90%" : "50%",
@@ -246,11 +255,9 @@ export default function DashboardLayout({
                     register={register}
                   />
 
-                  <Stack>
-                    <Button type="submit" size="small">
-                      Apply Filters
-                    </Button>
-                  </Stack>
+                  <Button type="submit" size="small">
+                    Apply Filters
+                  </Button>
                 </Stack>
               </form>
             </Modal>

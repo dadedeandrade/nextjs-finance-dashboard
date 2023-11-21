@@ -1,5 +1,4 @@
 import * as Mui from "@mui/material";
-import Head from "next/head";
 import OverviewExpenses from "../components/cards/OverviewExpenses";
 import OverviewRevenue from "../components/cards/OverviewRevenue";
 import LineChart from "../components/charts/LineChart";
@@ -10,8 +9,8 @@ import { OverviewPendingTransactions } from "../components/cards/OverviewPending
 
 function DashboardContent(props: any) {
   const testData = [
-    { month: 'Jan', userGain: 80000, userLost: 823 },
-    { month: 'Fev', userGain: 180000, userLost: 8223 },
+    { month: "Jan", userGain: 80000, userLost: 823 },
+    { month: "Fev", userGain: 180000, userLost: 8223 },
   ];
   const [userData, setUserData] = useState({
     labels: testData.map((data) => data.month),

@@ -12,7 +12,7 @@ import BalanceIcon from "@mui/icons-material/Balance";
 export const OverviewBalance = (props: any) => {
   const { value, sx } = props;
 
-  const { sumAllWithdrawals, sumAllDeposits } = useTransactions();
+  const { revenue, expenses } = useTransactions();
 
   return (
     <Card sx={sx}>
@@ -27,7 +27,9 @@ export const OverviewBalance = (props: any) => {
             <Typography color="text.secondary" variant="overline">
               Balance
             </Typography>
-            <Typography variant="body1">{(sumAllDeposits - sumAllWithdrawals).toFixed(2)} $</Typography>
+            <Typography variant="body1">
+              {(revenue - expenses).toFixed(2)} $
+            </Typography>
           </Stack>
           <Avatar
             sx={{

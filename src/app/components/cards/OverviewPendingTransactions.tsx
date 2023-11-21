@@ -1,22 +1,62 @@
-'use client';
+"use client";
 import {
   Avatar,
   Button,
   Card,
   CardActions,
   CardContent,
+  CircularProgress,
   Stack,
   SvgIcon,
+  SxProps,
+  Theme,
   Typography,
 } from "@mui/material";
-import useTransactions from "@/app/hooks/useTransactions";
+import useTransactions, { Transaction } from "@/app/hooks/useTransactions";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/app/store/store";
 
-export const OverviewPendingTransactions = ({ sx }: any) => {
+type Props = {
+  sx: SxProps<Theme> | undefined;
+};
+
+export const OverviewPendingTransactions = ({ sx }: Props) => {
   const router = useRouter();
-  const { futureTransactions } = useTransactions();
+  const { transactions } = useTransactions();
+  const filterState = useAppSelector((state) => state.filters);
+
+  if (!transactions) {
+    return (
+      <Card sx={sx}>
+        <CardContent>
+          <Stack
+            alignItems="center"
+            direction="row"
+            justifyContent="center"
+            spacing={3}
+          >
+            <CircularProgress></CircularProgress>
+          </Stack>
+        </CardContent>
+      </Card>
+    );
+  }
+  const filteredTransactions = transactions.filter(
+    (transaction: Transaction) => {
+      return (
+        transaction.transaction_type == "withdraw" &&
+        transaction.account
+          .toLowerCase()
+          .includes(filterState.account.toLowerCase())
+      );
+    }
+  );
+  const futureTransactions = filteredTransactions.filter(
+    (transaction) => transaction.date > Date.now()
+  );
+
   return (
     <Card sx={sx}>
       <CardContent>

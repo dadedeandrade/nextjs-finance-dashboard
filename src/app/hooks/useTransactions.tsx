@@ -43,38 +43,12 @@ const useTransactions = () => {
     fetchData();
   }, []);
 
-  const revenue =
-    data?.transactions
-      .filter((el: Transaction) => el.transaction_type === "deposit")
-      .reduce(
-        (partialSum, transaction) =>
-          partialSum + parseFloat(transaction.amount) / 100,
-        0
-      ) || 0;
-
-  const expenses =
-    data?.transactions
-      .filter((el: Transaction) => el.transaction_type === "withdraw")
-      .reduce(
-        (partialSum, transaction) =>
-          partialSum + parseFloat(transaction.amount) / 100,
-        0
-      ) || 0;
-
-  const futureTransactions =
-    data?.transactions.filter((transaction) => transaction.date > Date.now()) ||
-    [];
-
-  const getTransactionsPerMonth = () => {
-    return [
-      { transactionMonth: "Jan", amount: 123, transaction_type: "deposit" },
-    ];
-  };
+  const futureTransactions = data?.transactions.filter(
+    (transaction) => transaction.date > Date.now()
+  );
 
   return {
     transactions: data?.transactions,
-    expenses,
-    revenue,
     futureTransactions,
   };
 };

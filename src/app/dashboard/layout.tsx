@@ -6,19 +6,14 @@ import {
   Button,
   Divider,
   Drawer,
-  FormControl,
   IconButton,
-  InputLabel,
   List,
   ListItem,
   ListItemAvatar,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  MenuItem,
   Modal,
-  Select,
-  SelectChangeEvent,
   Stack,
   TextField,
   Toolbar,
@@ -37,8 +32,9 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import DatePick from "../components/modalForm/DatePick";
 import ModalSelect from "../components/modalForm/ModalSelect";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { selectedFilters, setFilters } from "../store/filtersSlice";
+import { useDispatch } from "react-redux";
+import { setFilters } from "../store/filtersSlice";
+import { useAppSelector } from "../store/store";
 
 export type FormValues = {
   startDate: Date | undefined;
@@ -157,7 +153,6 @@ export default function DashboardLayout({
     formState: { errors },
   } = useForm<FormValues>();
 
-  const filterState = useSelector(selectedFilters);
   const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
@@ -170,8 +165,6 @@ export default function DashboardLayout({
         state: data.state,
       })
     );
-    console.log(filterState);
-    console.log("data");
   };
 
   return (

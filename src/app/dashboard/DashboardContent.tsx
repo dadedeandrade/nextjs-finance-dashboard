@@ -1,4 +1,3 @@
-import * as Mui from "@mui/material";
 import OverviewExpenses from "../components/cards/OverviewExpenses";
 import OverviewRevenue from "../components/cards/OverviewRevenue";
 import LineChart from "../components/charts/LineChart";
@@ -6,14 +5,9 @@ import BarChart from "../components/charts/BarChart";
 import { useState } from "react";
 import { OverviewBalance } from "../components/cards/OverviewBalance";
 import { OverviewPendingTransactions } from "../components/cards/OverviewPendingTransactions";
-import { selectedFilters } from "../store/filtersSlice";
-import { useSelector } from "react-redux";
+import { Box, Container, Grid } from "@mui/material";
 
-function DashboardContent(props: any) {
-const filterState = useSelector(selectedFilters);
-  console.log(filterState);
-  
-
+function DashboardContent() {
   const testData = [
     { month: "Jan", userGain: 80000, userLost: 823 },
     { month: "Fev", userGain: 180000, userLost: 8223 },
@@ -51,41 +45,37 @@ const filterState = useSelector(selectedFilters);
   });
 
   return (
-    <Mui.Box
+    <Box
       component="main"
       sx={{
         flexGrow: 1,
         py: 6,
       }}
     >
-      <Mui.Container maxWidth="xl">
-        <Mui.Grid container spacing={3}>
-          <Mui.Grid item xs={12} sm={6} lg={3}>
-            <OverviewExpenses
-              difference={12}
-              positive
-              sx={{ height: "100%" }}
-            />
-          </Mui.Grid>
-          <Mui.Grid item xs={12} sm={6} lg={3}>
-            <OverviewRevenue difference={12} positive sx={{ height: "100%" }} />
-          </Mui.Grid>
-          <Mui.Grid item xs={12} sm={6} lg={3}>
+      <Container maxWidth="xl">
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6} lg={3}>
+            <OverviewExpenses sx={{ height: "100%" }} />
+          </Grid>
+          <Grid item xs={12} sm={6} lg={3}>
+            <OverviewRevenue sx={{ height: "100%" }} />
+          </Grid>
+          <Grid item xs={12} sm={6} lg={3}>
             <OverviewBalance sx={{ height: "100%" }} />
-          </Mui.Grid>
-          <Mui.Grid item xs={12} sm={6} lg={3}>
+          </Grid>
+          <Grid item xs={12} sm={6} lg={3}>
             <OverviewPendingTransactions sx={{ height: "100%" }} />
-          </Mui.Grid>
+          </Grid>
 
-          <Mui.Grid item xs={12} lg={8} sx={{ width: 700 }}>
+          <Grid item xs={12} lg={8} sx={{ width: 700 }}>
             <BarChart chartData={userData}></BarChart>
-          </Mui.Grid>
-          <Mui.Grid item xs={12} md={6} lg={4} sx={{ width: 700 }}>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4} sx={{ width: 700 }}>
             <LineChart chartData={userData} />
-          </Mui.Grid>
-        </Mui.Grid>
-      </Mui.Container>
-    </Mui.Box>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   );
 }
 

@@ -1,6 +1,5 @@
 // filtersSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { FilterState } from "./types";
 import { FormValues } from "../dashboard/layout";
 
 const initialState: FormValues = {
@@ -25,10 +24,6 @@ const filtersSlice = createSlice({
   },
 });
 
-export const {
-  setFilters,
-} = filtersSlice.actions;
-
-export const selectedFilters = (state: FilterState) => state;
+export const { setFilters } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

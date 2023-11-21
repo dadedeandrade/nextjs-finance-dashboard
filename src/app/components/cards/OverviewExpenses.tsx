@@ -1,54 +1,97 @@
-import React, { useEffect } from "react";
-import * as Mui from "@mui/material";
 import PaidIcon from "@mui/icons-material/Paid";
-import useTransactions from "@/app/hooks/useTransactions";
+import useTransactions, { Transaction } from "@/app/hooks/useTransactions";
+import { useAppSelector } from "@/app/store/store";
+import {
+  Avatar,
+  Card,
+  CardContent,
+  CircularProgress,
+  Stack,
+  SvgIcon,
+  SxProps,
+  Theme,
+  Typography,
+} from "@mui/material";
 
 type Props = {
-  difference: number;
-  positive: boolean;
-  sx: any;
+  sx: SxProps<Theme> | undefined;
 };
 
-function OverviewExpenses({ difference, positive, sx }: Props) {
-  const { expenses } = useTransactions();
+function OverviewExpenses({ sx }: Props) {
+  const { transactions } = useTransactions();
 
-  if (!expenses) {
-    return <>Loading</>;
+  const filterState = useAppSelector((state) => state.filters);
+
+  if (!transactions) {
+    return (
+      <Card sx={sx}>
+        <CardContent>
+          <Stack
+            alignItems="center"
+            direction="row"
+            justifyContent="center"
+            spacing={3}
+          >
+            <CircularProgress></CircularProgress>
+          </Stack>
+        </CardContent>
+      </Card>
+    );
   }
+
+  const filteredTransactions = transactions.filter(
+    (transaction: Transaction) => {
+      return (
+        transaction.transaction_type == "withdraw" &&
+        transaction.account
+          .toLowerCase()
+          .includes(filterState.account.toLowerCase())
+      );
+    }
+  );
+
+  const expenses =
+    filteredTransactions.reduce(
+      (partialSum, transaction) =>
+        partialSum + parseFloat(transaction.amount) / 100,
+      0
+    ) || 0;
+
   return (
-    <Mui.Card sx={sx}>
-      <Mui.CardContent>
-        <Mui.Stack
+    <Card sx={sx}>
+      <CardContent>
+        <Stack
           alignItems="flex-start"
           direction="row"
           justifyContent="space-between"
           spacing={3}
         >
-          <Mui.Stack spacing={1}>
-            <Mui.Typography color="text.secondary" variant="overline">
+          <Stack spacing={1}>
+            <Typography color="text.secondary" variant="overline">
               Expenses
-            </Mui.Typography>
-            <Mui.Typography variant="body1">
+            </Typography>
+            <Typography variant="body1">
               {expenses.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
-              })} $
-            </Mui.Typography>
-          </Mui.Stack>
-          <Mui.Avatar
+              })}{" "}
+              $
+            </Typography>
+          </Stack>
+          <Avatar
             sx={{
               backgroundColor: "error.main",
               height: 56,
               width: 56,
             }}
           >
-            <Mui.SvgIcon>
+            <SvgIcon>
               <PaidIcon />
-            </Mui.SvgIcon>
-          </Mui.Avatar>
-        </Mui.Stack>
-      </Mui.CardContent>
-    </Mui.Card>
+            </SvgIcon>
+          </Avatar>
+        </Stack>
+      </CardContent>
+    </Card>
   );
 }
 

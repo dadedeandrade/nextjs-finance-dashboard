@@ -6,7 +6,6 @@ import {
   Button,
   Divider,
   Drawer,
-  IconButton,
   List,
   ListItem,
   ListItemAvatar,
@@ -20,6 +19,7 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  IconButton,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
@@ -37,6 +37,9 @@ import { setFilters } from "../store/filtersSlice";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Utils from "../utils";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import styled from "styled-components";
 
 export type FormValues = {
   startDate?: Date | undefined | null;
@@ -45,6 +48,15 @@ export type FormValues = {
   industry?: string | undefined;
   state?: string | undefined;
 };
+
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  paddingLeft: "16px",
+  backgroundColor: "#080808",
+  height: 64,
+}));
 
 export default function DashboardLayout({
   children,
@@ -240,6 +252,18 @@ export default function DashboardLayout({
         </AppBar>
       </Box>
       <Drawer anchor={"left"} open={isDrawerOpen} onClose={toggleDrawer(false)}>
+        <DrawerHeader>
+          <Typography variant="h6" component="div" sx={{ color: "white" }}>
+            Finances
+          </Typography>
+          <IconButton onClick={toggleDrawer(false)} sx={{ color: "white" }}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </DrawerHeader>
         <Stack
           sx={{
             bgcolor: "#080808",
@@ -247,7 +271,6 @@ export default function DashboardLayout({
           }}
           direction={"column"}
           justifyContent={"space-between"}
-          minWidth={352}
           height={"100%"}
         >
           <List>

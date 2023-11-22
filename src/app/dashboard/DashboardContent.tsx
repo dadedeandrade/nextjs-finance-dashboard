@@ -9,42 +9,6 @@ import { Box, Container, Grid } from "@mui/material";
 import ActiveFilters from "../components/ActiveFilters";
 
 function DashboardContent() {
-  const testData = [
-    { month: "Jan", userGain: 80000, userLost: 823 },
-    { month: "Fev", userGain: 180000, userLost: 8223 },
-  ];
-  const [userData, setUserData] = useState({
-    labels: testData.map((data) => data.month),
-    datasets: [
-      {
-        label: "Users Gained",
-        data: testData.map((data) => data.userGain),
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-          "#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0",
-        ],
-        borderColor: "black",
-        borderWidth: 2,
-      },
-      {
-        label: "Users Lost",
-        data: testData.map((data) => data.userLost),
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-          "#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0",
-        ],
-        borderColor: "black",
-        borderWidth: 2,
-      },
-    ],
-  });
-
   return (
     <Box
       component="main"
@@ -70,12 +34,12 @@ function DashboardContent() {
             <OverviewPendingTransactions sx={{ height: "100%" }} />
           </Grid>
 
-          <Grid item xs={6} lg={6} sx={{ width: 700 }}>
+          <Grid item xs={12} lg={6} sx={{ width: 700 }}>
             <BarChart year={2023} />
             <BarChart year={2022} />
             <BarChart year={2021} />
           </Grid>
-          <Grid item xs={6} md={6} sx={{ width: 700 }}>
+          <Grid item xs={12} lg={6} sx={{ width: 700 }}>
             <LineChart year={2023} />
             <LineChart year={2022} />
             <LineChart year={2021} />

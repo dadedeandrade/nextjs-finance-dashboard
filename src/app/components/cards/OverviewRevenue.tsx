@@ -55,11 +55,11 @@ function OverviewRevenue({ sx }: Props) {
       transaction.transaction_type == "deposit" &&
       transaction.account
         .toLowerCase()
-        .includes(filterState.account.toLowerCase()) &&
+        .includes(filterState.account!.toLowerCase()) &&
       transaction.industry
         .toLowerCase()
-        .includes(filterState.industry.toLowerCase()) &&
-      transaction.state.toLowerCase().includes(filterState.state.toLowerCase())
+        .includes(filterState.industry!.toLowerCase()) &&
+      transaction.state.toLowerCase().includes(filterState.state!.toLowerCase())
     );
   });
 

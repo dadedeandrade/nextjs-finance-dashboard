@@ -70,11 +70,15 @@ function DashboardContent() {
             <OverviewPendingTransactions sx={{ height: "100%" }} />
           </Grid>
 
-          <Grid item xs={12} lg={8} sx={{ width: 700 }}>
-            <BarChart />
+          <Grid item xs={6} lg={6} sx={{ width: 700 }}>
+            <BarChart year={2023} />
+            <BarChart year={2022} />
+            <BarChart year={2021} />
           </Grid>
-          <Grid item xs={12} md={6} lg={4} sx={{ width: 700 }}>
-            <LineChart chartData={userData} />
+          <Grid item xs={6} md={6} sx={{ width: 700 }}>
+            <LineChart year={2023} />
+            <LineChart year={2022} />
+            <LineChart year={2021} />
           </Grid>
         </Grid>
       </Container>

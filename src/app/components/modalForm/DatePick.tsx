@@ -1,14 +1,15 @@
+import { FormValues } from "@/app/dashboard/layout";
 import { Stack } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { Controller } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 
 type Props = {
-  control: any;
-  labelFirst: any;
-  labelSecond: any;
-  nameFirst: any;
-  nameSecond: any;
+  control: Control<FormValues, any>;
+  labelFirst: string;
+  labelSecond: string;
+  nameFirst: "startDate" | "endDate" | "account" | "industry" | "state";
+  nameSecond: "startDate" | "endDate" | "account" | "industry" | "state";
 };
 
 const DatePick = ({

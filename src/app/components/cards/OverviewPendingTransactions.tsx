@@ -59,11 +59,11 @@ export const OverviewPendingTransactions = ({ sx }: Props) => {
     return (
       transaction.account
         .toLowerCase()
-        .includes(filterState.account.toLowerCase()) &&
+        .includes(filterState.account!.toLowerCase()) &&
       transaction.industry
         .toLowerCase()
-        .includes(filterState.industry.toLowerCase()) &&
-      transaction.state.toLowerCase().includes(filterState.state.toLowerCase())
+        .includes(filterState.industry!.toLowerCase()) &&
+      transaction.state.toLowerCase().includes(filterState.state!.toLowerCase())
     );
   });
   const futureTransactions = filteredTransactions.filter(

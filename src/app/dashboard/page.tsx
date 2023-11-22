@@ -32,14 +32,13 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale);
 
-
 function Dashboard() {
   const session = useSession();
 
   if (session.status == "unauthenticated") {
     redirect("/");
   }
-  
+
   return (
     <>
       {session.status == "loading" ? (
@@ -56,10 +55,7 @@ function Dashboard() {
           </Grid>
         </Grid>
       ) : (
-        <>
-         
-          <DashboardContent />
-        </>
+        <DashboardContent />
       )}
     </>
   );

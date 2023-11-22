@@ -34,14 +34,16 @@ import ModalSelect from "../components/modalForm/ModalSelect";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { setFilters } from "../store/filtersSlice";
-import { useAppSelector } from "../store/store";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Utils from "../utils";
 
 export type FormValues = {
-  startDate: Date;
-  endDate: Date;
-  account: string;
-  industry: string;
-  state: string;
+  startDate?: Date | undefined;
+  endDate?: Date | undefined;
+  account?: string | undefined;
+  industry?: string | undefined;
+  state?: string | undefined;
 };
 
 export default function DashboardLayout({
@@ -76,59 +78,7 @@ export default function DashboardLayout({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const stateList = [
-    "",
-    "AL",
-    "AK",
-    "AZ",
-    "AR",
-    "CA",
-    "CO",
-    "CT",
-    "DE",
-    "FL",
-    "GA",
-    "HI",
-    "ID",
-    "IL",
-    "IN",
-    "IA",
-    "KS",
-    "KY",
-    "LA",
-    "ME",
-    "MD",
-    "MA",
-    "MI",
-    "MN",
-    "MS",
-    "MO",
-    "MT",
-    "NE",
-    "NV",
-    "NH",
-    "NJ",
-    "NM",
-    "NY",
-    "NC",
-    "ND",
-    "OH",
-    "OK",
-    "OR",
-    "PA",
-    "RI",
-    "SC",
-    "SD",
-    "TN",
-    "TX",
-    "UT",
-    "VT",
-    "VA",
-    "WA",
-    "WV",
-    "WI",
-    "WY",
-  ];
+  const listOfStatesUsa = Utils.listOfStatesUsa();
 
   const availableIndustries = [
     "",
@@ -147,13 +97,23 @@ export default function DashboardLayout({
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
+  const validationSchema = yup.object({
+    startDate: yup.date(),
+    endDate: yup
+      .date()
+      .min(yup.ref("startDate"), "end date can't be before start date"),
+    account: yup.string(),
+    industry: yup.string(),
+    state: yup.string(),
+  });
+
   const {
     register,
     handleSubmit,
     watch,
     control,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({ resolver: yupResolver(validationSchema) });
 
   const dispatch = useDispatch();
 
@@ -258,7 +218,7 @@ export default function DashboardLayout({
                     labelId="state"
                     id="state"
                     label="State"
-                    availableOptions={stateList}
+                    availableOptions={listOfStatesUsa}
                     register={register}
                   />
 

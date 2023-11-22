@@ -293,7 +293,9 @@ export default function EnhancedTable({ rows }: EnhancedTableProps) {
                     <TableCell align="left">
                       {(row.amount / 100).toFixed(2)} $ <br />
                     </TableCell>
-                    <TableCell align="left">{row.currency.toUpperCase()}</TableCell>
+                    <TableCell align="left">
+                      {row.currency.toUpperCase()}
+                    </TableCell>
                     <TableCell align="left">{row.transaction_type}</TableCell>
                     <TableCell align="left">{row.state}</TableCell>
                   </TableRow>

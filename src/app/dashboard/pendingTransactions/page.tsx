@@ -18,13 +18,13 @@ function Page() {
           transaction.date > Date.now() &&
           transaction.account
             .toLowerCase()
-            .includes(filterState.account.toLowerCase()) &&
+            .includes(filterState.account!.toLowerCase()) &&
           transaction.industry
             .toLowerCase()
-            .includes(filterState.industry.toLowerCase()) &&
+            .includes(filterState.industry!.toLowerCase()) &&
           transaction.state
             .toLowerCase()
-            .includes(filterState.state.toLowerCase())
+            .includes(filterState.state!.toLowerCase())
         );
       })
     : [];
@@ -39,7 +39,7 @@ function Page() {
       <Box sx={{ width: "100%", padding: 3 }}>
         <ActiveFilters />
       </Box>
-      <EnhancedTable rows={transactionsToRows}></EnhancedTable>);
+      <EnhancedTable rows={transactionsToRows}></EnhancedTable>
     </>
   );
 }

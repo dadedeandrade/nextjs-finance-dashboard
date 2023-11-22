@@ -120,7 +120,6 @@ export default function DashboardLayout({
   const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    clearErrors();
     dispatch(
       setFilters({
         account: data.account,
@@ -172,7 +171,9 @@ export default function DashboardLayout({
                 onSubmit={async (e) => {
                   e.preventDefault();
                   await handleSubmit(onSubmit)();
-                  handleClose();
+                  if (!errors) {
+                    handleClose();
+                  }
                 }}
               >
                 <Stack

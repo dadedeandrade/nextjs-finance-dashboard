@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NextJS Finance Dashboard
 
-## Getting Started
+Bem-vindo ao aplicativo de gerenciamento financeiro para o teste técnico da BIX. Esse aplicativo permite filtrar e analisar dados relacionados a despesas, receitas, transações pendentes e saldo geral baseado no JSON fornecido. Com o recurso de gráficos para análise anual e tabela de transações penmdentes
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Filtragem de dados por
+- - Datas: Filtre seus dados financeiros com base em datas específicas.
+- - Estado: Visualize as transações por seu estado.
+- - Setor: Agrupe transações com base em tipos de setores.
+- - Contas: Filtrar dados de acordo com contas específicas.
+
+## Análise
+
+- Análise de despesas: Entenda seus hábitos de gastos por meio de análises detalhadas de despesas.
+- Análise de receita: Acompanhe e analise suas fontes de renda.
+- Gráficos anuais: Visualize seus dados financeiros ao longo de um ano para uma melhor análise de tendências.
+- Autenticação do usuário
+  Google Sign-In: Acesse com segurança suas informações financeiras por meio do Google Sign-In.
+
+## Stacks
+
+Foi utilizado:
+- Next.js
+- Redux
+- TypeScript
+- Material-UI (MUI)
+- Styled-components
+- Design responsivo e interativo
+
+## Primeiros passos
+
+Etapas para instalação em maquina local:
+
+1. Clone o repositório: git clone https://github.com/andradeviniicius/nextjs-finance-dashboard.git
+2. Instale as dependências: 
+```
+npm install
+```
+3. Configure as variáveis de ambiente.
+
+```
+GOOGLE_CLIENT_ID=1234YOURGOOGLEID
+GOOGLE_CLIENT_SECRET=1234YOURGOOGLESECRET
+
+NEXTAUTH_SECRET=1234YOURNEXTAUTHPASSWORD
+NEXTAUTH_URL=http://localhost:3000/ ou YOUR_URL
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Execute o aplicativo: npm run dev
+5. Acesse o aplicativo em http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Prontinho
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

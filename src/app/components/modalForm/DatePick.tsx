@@ -67,7 +67,6 @@ const DatePick = ({
               label={labelSecond}
               value={value}
               onChange={onChange}
-              onError={(e) => console.log(e)}
               slotProps={{
                 actionBar: {
                   actions: ["clear"],
@@ -75,9 +74,6 @@ const DatePick = ({
                 textField: {
                   helperText: errorMessage,
                 },
-              }}
-              onAccept={(newDate) => {
-                console.log(newDate);
               }}
             />
           )}

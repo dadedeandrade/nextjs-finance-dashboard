@@ -46,7 +46,10 @@ export const OverviewBalance = ({ sx }: Props) => {
           .includes(filterState.account.toLowerCase()) &&
         transaction.industry
           .toLowerCase()
-          .includes(filterState.industry.toLowerCase())
+          .includes(filterState.industry.toLowerCase()) &&
+        transaction.state
+          .toLowerCase()
+          .includes(filterState.state.toLowerCase())
       );
     }
   );

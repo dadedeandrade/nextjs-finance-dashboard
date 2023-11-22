@@ -5,9 +5,8 @@ import BarChart from "../components/charts/BarChart";
 import { useState } from "react";
 import { OverviewBalance } from "../components/cards/OverviewBalance";
 import { OverviewPendingTransactions } from "../components/cards/OverviewPendingTransactions";
-import { Box, Chip, Container, Grid, Stack, Typography } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../store/store";
-import { setFilters } from "../store/filtersSlice";
+import { Box, Container, Grid } from "@mui/material";
+import ActiveFilters from "../components/ActiveFilters";
 
 function DashboardContent() {
   const testData = [
@@ -46,9 +45,6 @@ function DashboardContent() {
     ],
   });
 
-  const filterState = useAppSelector((state) => state.filters);
-  const dispatch = useAppDispatch();
-
   return (
     <Box
       component="main"
@@ -58,85 +54,7 @@ function DashboardContent() {
       }}
     >
       <Container maxWidth="xl">
-        {(filterState.account ||
-          filterState.endDate ||
-          filterState.startDate ||
-          filterState.industry ||
-          filterState.state) && (
-          <Stack direction={"column"} spacing={2}>
-            <Typography variant="h5">Active Filters:</Typography>
-            <Stack direction={"row"} spacing={2}>
-              {filterState.startDate && filterState.endDate && (
-                <Chip
-                  label={filterState.startDate + "to" + filterState.endDate}
-                  variant="outlined"
-                  onDelete={() =>
-                    dispatch(
-                      setFilters({
-                        endDate: undefined,
-                        startDate: undefined,
-                        account: filterState.account,
-                        industry: filterState.industry,
-                        state: filterState.state,
-                      })
-                    )
-                  }
-                />
-              )}
-              {filterState.account && (
-                <Chip
-                  label={"Account: " + filterState.account}
-                  variant="outlined"
-                  onDelete={() =>
-                    dispatch(
-                      setFilters({
-                        endDate: filterState.endDate,
-                        startDate: filterState.startDate,
-                        account: "",
-                        industry: filterState.industry,
-                        state: filterState.state,
-                      })
-                    )
-                  }
-                />
-              )}
-              {filterState.industry && (
-                <Chip
-                  label={"Industry: " + filterState.industry}
-                  variant="outlined"
-                  onDelete={() => {
-                    dispatch(
-                      setFilters({
-                        endDate: filterState.endDate,
-                        startDate: filterState.startDate,
-                        account: filterState.account,
-                        industry: "",
-                        state: filterState.state,
-                      })
-                    );
-                  }}
-                />
-              )}
-              {filterState.state && (
-                <Chip
-                  label={"State: " + filterState.state}
-                  variant="outlined"
-                  onDelete={() =>
-                    dispatch(
-                      setFilters({
-                        endDate: filterState.endDate,
-                        startDate: filterState.startDate,
-                        account: filterState.account,
-                        industry: filterState.industry,
-                        state: "",
-                      })
-                    )
-                  }
-                />
-              )}
-            </Stack>
-          </Stack>
-        )}
+        <ActiveFilters />
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} lg={3}>
@@ -153,7 +71,7 @@ function DashboardContent() {
           </Grid>
 
           <Grid item xs={12} lg={8} sx={{ width: 700 }}>
-            <BarChart chartData={userData}></BarChart>
+            <BarChart />
           </Grid>
           <Grid item xs={12} md={6} lg={4} sx={{ width: 700 }}>
             <LineChart chartData={userData} />

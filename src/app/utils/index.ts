@@ -13,6 +13,16 @@ export default class Utils {
     );
   }
 
+  static formatDate(date: Date) {
+    return (
+      date.toLocaleString("default", { month: "short" })+
+      " " +
+      date.getUTCDate() +
+      " " +
+      date.getUTCFullYear()
+    );
+  }
+
   static formatNumber = (input: string) => {
     if (typeof input === "string") {
       const [parteInteira, parteDecimal] = input.split("");

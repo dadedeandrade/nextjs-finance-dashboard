@@ -186,18 +186,16 @@ export default function DashboardLayout({
               Finances
             </Typography>
 
-            {pathName === "/dashboard" && (
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-                onClick={handleOpen}
-              >
-                <FilterListIcon />
-              </IconButton>
-            )}
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={handleOpen}
+            >
+              <FilterListIcon />
+            </IconButton>
             <Modal
               open={open}
               onClose={handleClose}

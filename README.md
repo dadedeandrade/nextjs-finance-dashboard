@@ -5,16 +5,16 @@ Bem-vindo ao aplicativo de gerenciamento financeiro para o teste técnico da BIX
 ## Features
 
 - Filtragem de dados por
-- - Datas: Filtre seus dados financeiros com base em datas específicas.
-- - Estado: Visualize as transações por seu estado.
-- - Setor: Agrupe transações com base em tipos de setores.
-- - Contas: Filtrar dados de acordo com contas específicas.
+  - Datas: Filtre seus dados financeiros com base em datas específicas.
+  - Estado: Visualize as transações por seu estado.
+  - Setor: Agrupe transações com base em tipos de setores.
+  - Contas: Filtrar dados de acordo com contas específicas.
 
 ## Análise
 
-- Análise de despesas: Entenda seus hábitos de gastos por meio de análises detalhadas de despesas.
-- Análise de receita: Acompanhe e analise suas fontes de renda.
-- Gráficos anuais: Visualize seus dados financeiros ao longo de um ano para uma melhor análise de tendências.
+- Cards de despesas
+- Cards de receita
+- Gráficos anuais em barra e em linha
 - Autenticação do usuário
   Google Sign-In: Acesse com segurança suas informações financeiras por meio do Google Sign-In.
 
@@ -50,5 +50,6 @@ NEXTAUTH_URL=http://localhost:3000/ ou YOUR_URL
 4. Execute o aplicativo: npm run dev
 5. Acesse o aplicativo em http://localhost:3000
 
-Prontinho
+Ou, bem mais fácil, acesse:
+https://nextjs-finance-dashboard-psi.vercel.app/
 

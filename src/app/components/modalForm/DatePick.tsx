@@ -10,8 +10,6 @@ type Props = {
   labelSecond: string;
   nameFirst: "startDate" | "endDate" | "account" | "industry" | "state";
   nameSecond: "startDate" | "endDate" | "account" | "industry" | "state";
-  defaultValueFirst: any;
-  defaultValueSecond: any;
 };
 
 const DatePick = ({
@@ -20,8 +18,6 @@ const DatePick = ({
   labelFirst,
   labelSecond,
   nameSecond,
-  defaultValueFirst,
-  defaultValueSecond,
 }: Props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -37,19 +33,17 @@ const DatePick = ({
         <Controller
           name={nameFirst}
           control={control}
-          render={({ field: { onChange, ref, value } }) => (
+          render={({ field: { onChange, value } }) => (
             <DatePicker
               sx={{ width: "100%" }}
               label={labelFirst}
-              defaultValue={""}
+              value={value}
+              onChange={onChange}
               slotProps={{
                 actionBar: {
                   actions: ["clear"],
                 },
               }}
-              value={value ?? new Date()}
-              onChange={onChange}
-              ref={ref}
             />
           )}
         />
@@ -57,10 +51,12 @@ const DatePick = ({
         <Controller
           name={nameSecond}
           control={control}
-          render={({ field: { onChange, ref, value } }) => (
+          render={({ field: { onChange, value } }) => (
             <DatePicker
               sx={{ width: "100%" }}
               label={labelSecond}
+              value={value}
+              onChange={onChange}
               slotProps={{
                 actionBar: {
                   actions: ["clear"],
@@ -69,9 +65,6 @@ const DatePick = ({
               onAccept={(newDate) => {
                 console.log(newDate);
               }}
-              value={value ?? new Date()}
-              onChange={onChange}
-              ref={ref}
             />
           )}
         />

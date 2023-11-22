@@ -98,11 +98,10 @@ export default function DashboardLayout({
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const validationSchema = yup.object({
-    startDate: yup.date().optional(),
+    startDate: yup.date(),
     endDate: yup
       .date()
-      .min(yup.ref("startDate"), "end date can't be before start date")
-      .optional(),
+      .min(yup.ref("startDate"), "end date can't be before start date"),
     account: yup.string(),
     industry: yup.string(),
     state: yup.string(),
@@ -113,7 +112,7 @@ export default function DashboardLayout({
     handleSubmit,
     watch,
     control,
-    formState: { errors, defaultValues },
+    formState: { errors },
   } = useForm<FormValues>({ resolver: yupResolver(validationSchema) });
 
   const dispatch = useDispatch();
@@ -198,8 +197,6 @@ export default function DashboardLayout({
                     labelSecond={"End Date"}
                     nameFirst={"startDate"}
                     nameSecond={"endDate"}
-                    defaultValueFirst={defaultValues?.startDate}
-                    defaultValueSecond={defaultValues?.endDate}
                   />
 
                   <TextField

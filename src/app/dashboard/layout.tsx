@@ -112,7 +112,7 @@ export default function DashboardLayout({
     handleSubmit,
     watch,
     control,
-    formState: { errors },
+    formState: { errors, defaultValues },
   } = useForm<FormValues>({ resolver: yupResolver(validationSchema) });
 
   const dispatch = useDispatch();
@@ -197,6 +197,8 @@ export default function DashboardLayout({
                     labelSecond={"End Date"}
                     nameFirst={"startDate"}
                     nameSecond={"endDate"}
+                    defaultValueFirst={defaultValues?.startDate}
+                    defaultValueSecond={defaultValues?.endDate}
                   />
 
                   <TextField

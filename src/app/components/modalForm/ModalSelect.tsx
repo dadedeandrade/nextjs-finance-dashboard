@@ -27,7 +27,13 @@ const ModalSelect = ({
   return (
     <FormControl fullWidth>
       <InputLabel id={id}>{inputLabel}</InputLabel>
-      <Select labelId={labelId} id={id} label={label} {...register(id)}>
+      <Select
+        labelId={labelId}
+        id={id}
+        label={label}
+        {...register(id)}
+        defaultValue={""}
+      >
         <MenuItem key={""} value={""}>
           None
         </MenuItem>

@@ -47,11 +47,7 @@ const DatePick = ({
                   actions: ["clear"],
                 },
               }}
-<<<<<<< HEAD
               value={value ?? new Date()}
-=======
-              value={value ?? ""}
->>>>>>> ffb561ba6e98a11a73b89ded94a6560532085b3a
               onChange={onChange}
               ref={ref}
             />

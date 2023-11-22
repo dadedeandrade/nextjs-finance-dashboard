@@ -2,7 +2,8 @@ import { FormValues } from "@/app/dashboard/layout";
 import { Stack } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { Control, Controller } from "react-hook-form";
+import { useMemo } from "react";
+import { Control, Controller, FieldError } from "react-hook-form";
 
 type Props = {
   control: Control<FormValues, any>;
@@ -10,6 +11,7 @@ type Props = {
   labelSecond: string;
   nameFirst: "startDate" | "endDate" | "account" | "industry" | "state";
   nameSecond: "startDate" | "endDate" | "account" | "industry" | "state";
+  endDateError: FieldError | undefined;
 };
 
 const DatePick = ({
@@ -18,11 +20,19 @@ const DatePick = ({
   labelFirst,
   labelSecond,
   nameSecond,
+  endDateError,
 }: Props) => {
+  const errorMessage = useMemo(() => {
+    if (endDateError) {
+      return "Please select a end date that is above the start date";
+    }
+    return "";
+  }, [endDateError]);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Stack
-        alignItems={"center"}
+        alignItems={"start"}
         justifyContent={"center"}
         gap={3}
         sx={{
@@ -57,9 +67,13 @@ const DatePick = ({
               label={labelSecond}
               value={value}
               onChange={onChange}
+              onError={(e) => console.log(e)}
               slotProps={{
                 actionBar: {
                   actions: ["clear"],
+                },
+                textField: {
+                  helperText: errorMessage,
                 },
               }}
               onAccept={(newDate) => {

@@ -39,8 +39,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Utils from "../utils";
 
 export type FormValues = {
-  startDate?: Date | undefined;
-  endDate?: Date | undefined;
+  startDate?: Date | undefined | null;
+  endDate?: Date | undefined | null;
   account?: string | undefined;
   industry?: string | undefined;
   state?: string | undefined;
@@ -98,9 +98,10 @@ export default function DashboardLayout({
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const validationSchema = yup.object({
-    startDate: yup.date(),
+    startDate: yup.date().nullable(),
     endDate: yup
       .date()
+      .nullable()
       .min(yup.ref("startDate"), "end date can't be before start date"),
     account: yup.string(),
     industry: yup.string(),
@@ -111,6 +112,7 @@ export default function DashboardLayout({
     register,
     handleSubmit,
     watch,
+    clearErrors,
     control,
     formState: { errors },
   } = useForm<FormValues>({ resolver: yupResolver(validationSchema) });
@@ -118,6 +120,7 @@ export default function DashboardLayout({
   const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
+    clearErrors();
     dispatch(
       setFilters({
         account: data.account,
@@ -197,6 +200,7 @@ export default function DashboardLayout({
                     labelSecond={"End Date"}
                     nameFirst={"startDate"}
                     nameSecond={"endDate"}
+                    endDateError={errors.endDate}
                   />
 
                   <TextField

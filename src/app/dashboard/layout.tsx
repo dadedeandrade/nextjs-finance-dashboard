@@ -37,8 +37,8 @@ import { setFilters } from "../store/filtersSlice";
 import { useAppSelector } from "../store/store";
 
 export type FormValues = {
-  startDate: Date | undefined;
-  endDate: Date | undefined;
+  startDate: Date;
+  endDate: Date;
   account: string;
   industry: string;
   state: string;
@@ -77,6 +77,7 @@ export default function DashboardLayout({
   const handleClose = () => setOpen(false);
 
   const stateList = [
+    "",
     "AL",
     "AK",
     "AZ",
@@ -130,6 +131,7 @@ export default function DashboardLayout({
   ];
 
   const availableIndustries = [
+    "",
     "Oil and Gas Equipment",
     "Food Consumer Products",
     "Hotels",
@@ -262,6 +264,9 @@ export default function DashboardLayout({
 
                   <Button type="submit" size="small">
                     Apply Filters
+                  </Button>
+                  <Button onClick={() => handleClose()} size="small">
+                    Cancel
                   </Button>
                 </Stack>
               </form>

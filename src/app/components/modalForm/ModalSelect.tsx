@@ -10,16 +10,7 @@ import { UseFormRegister } from "react-hook-form";
 
 type Props = {
   labelId: string;
-  id:
-    | "startDate"
-    | "endDate"
-    | "account"
-    | "industry"
-    | "state"
-    | "startDate.value"
-    | "startDate.name"
-    | "endDate.value"
-    | "endDate.name";
+  id: "startDate" | "endDate" | "account" | "industry" | "state";
   label: string;
   inputLabel: string;
   availableOptions: string[];
@@ -37,6 +28,9 @@ const ModalSelect = ({
     <FormControl fullWidth>
       <InputLabel id={id}>{inputLabel}</InputLabel>
       <Select labelId={labelId} id={id} label={label} {...register(id)}>
+        <MenuItem key={""} value={""}>
+          None
+        </MenuItem>
         {availableOptions.map((el) => {
           return (
             <MenuItem key={el} value={el}>

@@ -38,6 +38,11 @@ const DatePick = ({
               label={labelFirst}
               value={value}
               onChange={onChange}
+              slotProps={{
+                actionBar: {
+                  actions: ["clear"],
+                },
+              }}
             />
           )}
         />
@@ -51,6 +56,14 @@ const DatePick = ({
               label={labelSecond}
               value={value}
               onChange={onChange}
+              slotProps={{
+                actionBar: {
+                  actions: ["clear"],
+                },
+              }}
+              onAccept={(newDate) => {
+                console.log(newDate);
+              }}
             />
           )}
         />

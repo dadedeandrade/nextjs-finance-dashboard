@@ -38,22 +38,30 @@ function OverviewRevenue({ sx }: Props) {
       </Card>
     );
   }
-  const filteredTransactions = transactions.filter(
-    (transaction: Transaction) => {
+
+  const dateFilter = transactions.filter((el) => {
+    if (filterState.startDate && filterState.endDate) {
       return (
-        transaction.transaction_type == "deposit" &&
-        transaction.account
-          .toLowerCase()
-          .includes(filterState.account.toLowerCase()) &&
-        transaction.industry
-          .toLowerCase()
-          .includes(filterState.industry.toLowerCase()) &&
-        transaction.state
-          .toLowerCase()
-          .includes(filterState.state.toLowerCase())
+        new Date(Math.round(Number(el.date))) >= filterState.startDate &&
+        new Date(Math.round(Number(el.date))) <= filterState.endDate
       );
+    } else {
+      return el;
     }
-  );
+  });
+
+  const filteredTransactions = dateFilter.filter((transaction: Transaction) => {
+    return (
+      transaction.transaction_type == "deposit" &&
+      transaction.account
+        .toLowerCase()
+        .includes(filterState.account.toLowerCase()) &&
+      transaction.industry
+        .toLowerCase()
+        .includes(filterState.industry.toLowerCase()) &&
+      transaction.state.toLowerCase().includes(filterState.state.toLowerCase())
+    );
+  });
 
   const revenue =
     filteredTransactions.reduce(

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { NextAuthProvider, StoreProvider, ThemeProviderMUI } from "./providers";
+import Loading from "./dashboard/loading";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +23,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <StoreProvider>
           <NextAuthProvider>
-            <ThemeProviderMUI>{children}</ThemeProviderMUI>
+            <ThemeProviderMUI>
+              <Suspense fallback={<Loading />}>{children}</Suspense>
+            </ThemeProviderMUI>
           </NextAuthProvider>
         </StoreProvider>
       </body>

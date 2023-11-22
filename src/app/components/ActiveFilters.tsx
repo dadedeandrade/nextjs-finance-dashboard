@@ -17,7 +17,7 @@ function ActiveFilters() {
         filterState.state) && (
         <Stack direction={"column"} spacing={2}>
           <Typography variant="h5">Active Filters:</Typography>
-          <Stack direction={"row"} spacing={2}>
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             {filterState.startDate && filterState.endDate && (
               <Chip
                 sx={{ textTransform: "capitalize" }}

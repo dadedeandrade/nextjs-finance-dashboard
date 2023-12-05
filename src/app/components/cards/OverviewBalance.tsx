@@ -9,7 +9,7 @@ import {
   Theme,
   Typography,
 } from "@mui/material";
-import useTransactions, { Transaction } from "@/app/hooks/useTransactions";
+import { Transaction } from "@/app/hooks/useTransactions";
 import BalanceIcon from "@mui/icons-material/Balance";
 import { useAppSelector } from "@/app/store/store";
 
@@ -18,10 +18,10 @@ type Props = {
 };
 
 export const OverviewBalance = ({ sx }: Props) => {
-  const { transactions } = useTransactions();
   const filterState = useAppSelector((state) => state.filters);
+  const transactionsState = useAppSelector((state) => state.transactions.data);
 
-  if (!transactions) {
+  if (!transactionsState) {
     return (
       <Card sx={sx}>
         <CardContent>
@@ -38,7 +38,7 @@ export const OverviewBalance = ({ sx }: Props) => {
     );
   }
 
-  const dateFilter = transactions.filter((el) => {
+  const dateFilter = transactionsState.filter((el) => {
     if (filterState.startDate && filterState.endDate) {
       return (
         new Date(Math.round(Number(el.date))) >= filterState.startDate &&

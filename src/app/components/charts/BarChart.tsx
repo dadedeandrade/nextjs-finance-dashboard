@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { Card, CardContent, CircularProgress, Stack } from "@mui/material";
-import useTransactions, { Transaction } from "@/app/hooks/useTransactions";
+import { Transaction } from "@/app/hooks/useTransactions";
 import { useAppSelector } from "@/app/store/store";
 
 type UserData = {
@@ -55,15 +55,16 @@ function BarChart({ year }: { year: number }) {
     ],
   });
 
-  const { transactions } = useTransactions();
+  const transactionsState = useAppSelector((state) => state.transactions.data);
+
   const filterState = useAppSelector((state) => state.filters);
 
   useEffect(() => {
-    if (!transactions) {
+    if (!transactionsState) {
       return;
     }
 
-    const dateFilter = transactions.filter((el) => {
+    const dateFilter = transactionsState.filter((el) => {
       if (filterState.startDate && filterState.endDate) {
         return (
           new Date(Math.round(Number(el.date))) >= filterState.startDate &&
@@ -202,7 +203,7 @@ function BarChart({ year }: { year: number }) {
       ],
     });
   }, [
-    transactions,
+    transactionsState,
     filterState.startDate,
     filterState.endDate,
     filterState.account,
@@ -211,7 +212,7 @@ function BarChart({ year }: { year: number }) {
     year,
   ]);
 
-  if (!transactions) {
+  if (!transactionsState) {
     return (
       <Card sx={{ height: "100%" }}>
         <CardContent>

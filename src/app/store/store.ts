@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import filtersSlice from "./filtersSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import transactionsSlice from "./transactionsSlice";
 
 export const store = configureStore({
   reducer: {
     filters: filtersSlice,
+    transactions: transactionsSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

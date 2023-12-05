@@ -1,19 +1,18 @@
 "use client";
 import ActiveFilters from "@/app/components/ActiveFilters";
 import EnhancedTable, { Data } from "@/app/components/EnhancedTable";
-import useTransactions from "@/app/hooks/useTransactions";
 import { useAppSelector } from "@/app/store/store";
 import Utils from "@/app/utils";
 import { Box, Paper } from "@mui/material";
 import React from "react";
 
 function Page() {
-  const { transactions } = useTransactions();
+  const transactionsState = useAppSelector((state) => state.transactions.data);
 
   const filterState = useAppSelector((state) => state.filters);
 
-  const futureTransactions = transactions
-    ? transactions.filter((transaction) => {
+  const futureTransactions = transactionsState
+    ? transactionsState.filter((transaction) => {
         return (
           transaction.date > Date.now() &&
           transaction.account

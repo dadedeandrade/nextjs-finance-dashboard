@@ -1,28 +1,18 @@
-"use client";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+"use server";
 import React from "react";
-
 import DashboardContent from "./DashboardContent";
-import {
-  CategoryScale,
-  LinearScale,
-  Chart as ChartJS,
-} from "chart.js/auto";
-import Loading from "./loading";
+import { promises as fs } from "fs";
 
-ChartJS.register(CategoryScale, LinearScale);
-
-function Dashboard() {
-  const session = useSession();
-
-  if (session.status == "unauthenticated") {
-    redirect("/");
-  }
+async function Dashboard() {
+  const file = await fs.readFile(
+    process.cwd() + "/src/app/transactions.json",
+    "utf8"
+  );
+  const data = JSON.parse(file);
 
   return (
     <>
-      {session.status == "loading" ? <Loading></Loading> : <DashboardContent />}
+      <DashboardContent data={data} />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PaidIcon from "@mui/icons-material/Paid";
-import useTransactions, { Transaction } from "@/app/hooks/useTransactions";
+import { Transaction } from "@/app/hooks/useTransactions";
 import {
   Avatar,
   Card,
@@ -19,10 +19,10 @@ type Props = {
 };
 
 function OverviewRevenue({ sx }: Props) {
-  const { transactions } = useTransactions();
   const filterState = useAppSelector((state) => state.filters);
+  const transactionsState = useAppSelector((state) => state.transactions.data);
 
-  if (!transactions) {
+  if (!transactionsState) {
     return (
       <Card sx={sx}>
         <CardContent>
@@ -39,7 +39,7 @@ function OverviewRevenue({ sx }: Props) {
     );
   }
 
-  const dateFilter = transactions.filter((el) => {
+  const dateFilter = transactionsState.filter((el) => {
     if (filterState.startDate && filterState.endDate) {
       return (
         new Date(Math.round(Number(el.date))) >= filterState.startDate &&

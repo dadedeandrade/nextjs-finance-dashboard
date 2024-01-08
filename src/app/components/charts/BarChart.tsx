@@ -3,6 +3,7 @@ import { Bar } from "react-chartjs-2";
 import { Card, CardContent, CircularProgress, Stack } from "@mui/material";
 import useTransactions, { Transaction } from "@/app/hooks/useTransactions";
 import { useAppSelector } from "@/app/store/store";
+import Utils from "@/app/utils";
 
 type UserData = {
   labels: string[];
@@ -63,16 +64,8 @@ function BarChart({ year }: { year: number }) {
       return;
     }
 
-    const dateFilter = transactions.filter((el) => {
-      if (filterState.startDate && filterState.endDate) {
-        return (
-          new Date(Math.round(Number(el.date))) >= filterState.startDate &&
-          new Date(Math.round(Number(el.date))) <= filterState.endDate
-        );
-      } else {
-        return el;
-      }
-    });
+    const dateFilter = Utils.filterTransactionsByDate(transactions, filterState);
+
 
     const filteredTransactionsDeposit = dateFilter.filter(
       (transaction: Transaction) => {

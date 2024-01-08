@@ -12,6 +12,7 @@ import {
   Theme,
   Typography,
 } from "@mui/material";
+import Utils from "@/app/utils";
 
 type Props = {
   sx: SxProps<Theme> | undefined;
@@ -39,16 +40,8 @@ function OverviewExpenses({ sx }: Props) {
     );
   }
 
-  const dateFilter = transactions.filter((el) => {
-    if (filterState.startDate && filterState.endDate) {
-      return (
-        new Date(Math.round(Number(el.date))) >= filterState.startDate &&
-        new Date(Math.round(Number(el.date))) <= filterState.endDate
-      );
-    } else {
-      return el;
-    }
-  });
+  const dateFilter = Utils.filterTransactionsByDate(transactions, filterState);
+
 
   const filteredTransactions = dateFilter.filter((transaction: Transaction) => {
     return (

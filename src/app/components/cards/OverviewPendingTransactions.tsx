@@ -17,6 +17,7 @@ import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/app/store/store";
+import Utils from "@/app/utils";
 
 type Props = {
   sx: SxProps<Theme> | undefined;
@@ -44,16 +45,7 @@ export const OverviewPendingTransactions = ({ sx }: Props) => {
     );
   }
 
-  const dateFilter = transactions.filter((el) => {
-    if (filterState.startDate && filterState.endDate) {
-      return (
-        new Date(Math.round(Number(el.date))) >= filterState.startDate &&
-        new Date(Math.round(Number(el.date))) <= filterState.endDate
-      );
-    } else {
-      return el;
-    }
-  });
+  const dateFilter = Utils.filterTransactionsByDate(transactions, filterState);
 
   const filteredTransactions = dateFilter.filter((transaction: Transaction) => {
     return (

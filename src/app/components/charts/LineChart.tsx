@@ -64,16 +64,10 @@ function LineChart({ year }: { year: number }) {
       return;
     }
 
-    const dateFilter = transactions.filter((el) => {
-      if (filterState.startDate && filterState.endDate) {
-        return (
-          new Date(Math.round(Number(el.date))) >= filterState.startDate &&
-          new Date(Math.round(Number(el.date))) <= filterState.endDate
-        );
-      } else {
-        return el;
-      }
-    });
+    const dateFilter = Utils.filterTransactionsByDate(
+      transactions,
+      filterState
+    );
 
     const filteredTransactionsDeposit = dateFilter.filter(
       (transaction: Transaction) => {

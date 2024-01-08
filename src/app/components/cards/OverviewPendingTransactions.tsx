@@ -18,6 +18,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/app/store/store";
 import Utils from "@/app/utils";
+import useFilteredTransactions from "@/app/hooks/useFilteredTransactions";
 
 type Props = {
   sx: SxProps<Theme> | undefined;
@@ -27,7 +28,11 @@ export const OverviewPendingTransactions = ({ sx }: Props) => {
   const router = useRouter();
   const { transactions } = useTransactions();
   const filterState = useAppSelector((state) => state.filters);
-
+  const { filteredTransactions } = useFilteredTransactions(
+    transactions,
+    filterState
+  );
+  
   if (!transactions) {
     return (
       <Card sx={sx}>
@@ -45,19 +50,6 @@ export const OverviewPendingTransactions = ({ sx }: Props) => {
     );
   }
 
-  const dateFilter = Utils.filterTransactionsByDate(transactions, filterState);
-
-  const filteredTransactions = dateFilter.filter((transaction: Transaction) => {
-    return (
-      transaction.account
-        .toLowerCase()
-        .includes(filterState.account!.toLowerCase()) &&
-      transaction.industry
-        .toLowerCase()
-        .includes(filterState.industry!.toLowerCase()) &&
-      transaction.state.toLowerCase().includes(filterState.state!.toLowerCase())
-    );
-  });
   const futureTransactions = filteredTransactions.filter(
     (transaction) => transaction.date > Date.now()
   );

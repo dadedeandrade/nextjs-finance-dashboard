@@ -1,4 +1,3 @@
-import { FormValues } from "../dashboard/layout";
 import { Transaction } from "../hooks/useTransactions";
 
 export default class Utils {
@@ -94,20 +93,4 @@ export default class Utils {
   }
 
   static normalizeData = (data: Promise<Transaction[]>) => {};
-
-  static filterTransactionsByDate = (
-    transactions: Transaction[],
-    filterState: FormValues
-  ) => {
-    return transactions.filter((el) => {
-      if (filterState.startDate && filterState.endDate) {
-        return (
-          new Date(Math.round(Number(el.date))) >= filterState.startDate &&
-          new Date(Math.round(Number(el.date))) <= filterState.endDate
-        );
-      } else {
-        return el;
-      }
-    });
-  };
 }

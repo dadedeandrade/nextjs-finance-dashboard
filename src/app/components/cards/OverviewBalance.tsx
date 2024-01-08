@@ -9,10 +9,11 @@ import {
   Theme,
   Typography,
 } from "@mui/material";
-import useTransactions, { Transaction } from "@/app/hooks/useTransactions";
+import useTransactions from "@/app/hooks/useTransactions";
 import BalanceIcon from "@mui/icons-material/Balance";
 import { useAppSelector } from "@/app/store/store";
-import Utils from "@/app/utils";
+import useFilteredTransactions, {
+} from "@/app/hooks/useFilteredTransactions";
 
 type Props = {
   sx: SxProps<Theme> | undefined;
@@ -21,6 +22,10 @@ type Props = {
 export const OverviewBalance = ({ sx }: Props) => {
   const { transactions } = useTransactions();
   const filterState = useAppSelector((state) => state.filters);
+  const { filteredExpenses, filteredRevenue } = useFilteredTransactions(
+    transactions,
+    filterState
+  );
 
   if (!transactions) {
     return (
@@ -39,41 +44,6 @@ export const OverviewBalance = ({ sx }: Props) => {
     );
   }
 
-  const dateFilter = Utils.filterTransactionsByDate(transactions, filterState);
-
-
-  const filteredTransactions = dateFilter.filter((transaction: Transaction) => {
-    return (
-      transaction.account
-        .toLowerCase()
-        .includes(filterState.account!.toLowerCase()) &&
-      transaction.industry
-        .toLowerCase()
-        .includes(filterState.industry!.toLowerCase()) &&
-      transaction.state.toLowerCase().includes(filterState.state!.toLowerCase())
-    );
-  });
-
-  const expenses =
-    filteredTransactions
-      .filter((transaction: Transaction) => {
-        return transaction.transaction_type == "withdraw";
-      })
-      .reduce(
-        (partialSum, transaction) =>
-          partialSum + parseFloat(transaction.amount) / 100,
-        0
-      ) || 0;
-
-  const revenue =
-    filteredTransactions
-      .filter((el: Transaction) => el.transaction_type === "deposit")
-      .reduce(
-        (partialSum, transaction) =>
-          partialSum + parseFloat(transaction.amount) / 100,
-        0
-      ) || 0;
-
   return (
     <Card sx={sx}>
       <CardContent>
@@ -88,7 +58,7 @@ export const OverviewBalance = ({ sx }: Props) => {
               Balance
             </Typography>
             <Typography variant="body1">
-              {(revenue - expenses).toFixed(2)} $
+              {(filteredRevenue! - filteredExpenses!).toFixed(2)} $
             </Typography>
           </Stack>
           <Avatar

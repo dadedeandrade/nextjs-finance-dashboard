@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useAppSelector } from "@/app/store/store";
-import Utils from "@/app/utils";
+import useFilteredTransactions from "@/app/hooks/useFilteredTransactions";
 
 type Props = {
   sx: SxProps<Theme> | undefined;
@@ -22,7 +22,10 @@ type Props = {
 function OverviewRevenue({ sx }: Props) {
   const { transactions } = useTransactions();
   const filterState = useAppSelector((state) => state.filters);
-
+  const { filteredRevenue } = useFilteredTransactions(
+    transactions,
+    filterState
+  );
   if (!transactions) {
     return (
       <Card sx={sx}>
@@ -40,28 +43,6 @@ function OverviewRevenue({ sx }: Props) {
     );
   }
 
-  const dateFilter = Utils.filterTransactionsByDate(transactions, filterState);
-
-  const filteredTransactions = dateFilter.filter((transaction: Transaction) => {
-    return (
-      transaction.transaction_type == "deposit" &&
-      transaction.account
-        .toLowerCase()
-        .includes(filterState.account!.toLowerCase()) &&
-      transaction.industry
-        .toLowerCase()
-        .includes(filterState.industry!.toLowerCase()) &&
-      transaction.state.toLowerCase().includes(filterState.state!.toLowerCase())
-    );
-  });
-
-  const revenue =
-    filteredTransactions.reduce(
-      (partialSum, transaction) =>
-        partialSum + parseFloat(transaction.amount) / 100,
-      0
-    ) || 0;
-
   return (
     <Card sx={sx}>
       <CardContent>
@@ -76,7 +57,7 @@ function OverviewRevenue({ sx }: Props) {
               Revenue
             </Typography>
             <Typography variant="body1">
-              {revenue.toLocaleString("en-US", {
+              {filteredRevenue!.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}{" "}

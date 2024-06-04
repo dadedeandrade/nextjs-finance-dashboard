@@ -161,17 +161,17 @@ export default function DashboardLayout({
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Finances
             </Typography>
-
-            <IconButton
-              size="large"
+            <Button size="large"
               edge="start"
               color="inherit"
               aria-label="menu"
               sx={{ mr: 2 }}
               onClick={handleOpen}
+              variant="contained"
+              startIcon={<FilterListIcon />}
             >
-              <FilterListIcon />
-            </IconButton>
+              Filter Data
+            </Button>
             <Modal
               open={open}
               onClose={handleClose}

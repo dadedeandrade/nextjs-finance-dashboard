@@ -161,9 +161,8 @@ export default function DashboardLayout({
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Finances
             </Typography>
-            <Button size="large"
-              edge="start"
-              color="inherit"
+            <Button
+              color="primary"
               aria-label="menu"
               sx={{ mr: 2 }}
               onClick={handleOpen}
